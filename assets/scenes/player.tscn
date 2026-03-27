@@ -6,15 +6,104 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwm0n"]
 size = Vector2(32, 64)
 
+[sub_resource type="Animation" id="Animation_14505"]
+resource_name = "attack"
+length = 0.50005
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 64, 128, 64)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [48.0],
+"method": &"_set_offset"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_s027a"]
+resource_name = "idle"
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 0, 32, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_14505"]
+_data = {
+&"attack": SubResource("Animation_14505"),
+&"idle": SubResource("Animation_s027a")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s027a"]
+size = Vector2(88, 20)
+
 [node name="Player" type="CharacterBody2D" unique_id=1300672341]
+collision_mask = 2
 script = ExtResource("1_rwm0n")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470087265]
 texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("2_s027a")
+offset = Vector2(48, 0)
+region_enabled = true
+region_rect = Rect2(16, 64, 128, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543934188]
 shape = SubResource("RectangleShape2D_rwm0n")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=471507383]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=803532606]
+libraries/ = SubResource("AnimationLibrary_14505")
+autoplay = &"idle"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1567318469]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1623542061]
+position = Vector2(53, -6)
+shape = SubResource("RectangleShape2D_s027a")
+disabled = true
+debug_color = Color(0.9995424, 0, 0.124113865, 0.41960785)
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
