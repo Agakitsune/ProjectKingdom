@@ -107,3 +107,4 @@ disabled = true
 debug_color = Color(0.9995424, 0, 0.124113865, 0.41960785)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

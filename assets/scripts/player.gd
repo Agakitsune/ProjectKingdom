@@ -54,3 +54,7 @@ func _set_offset(x: float):
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	animation_player.play("idle")
 	whip_shape.disabled = true
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	body._damage()

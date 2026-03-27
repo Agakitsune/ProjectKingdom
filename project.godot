@@ -28,7 +28,9 @@ window/stretch/scale_mode="integer"
 folder_colors={
 "res://assets/resources/": "green",
 "res://assets/scenes/": "red",
+"res://assets/scenes/enemies/": "orange",
 "res://assets/scripts/": "yellow",
+"res://assets/scripts/enemies/": "orange",
 "res://assets/textures/": "purple",
 "res://assets/textures/spritesheets/": "pink",
 "res://assets/textures/tilesets/": "gray"
