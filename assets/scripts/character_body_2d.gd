@@ -27,4 +27,4 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("spell"):
 		var spell = POISON_POTION.instantiate()
 		get_parent().add_child(spell)
-		spell.setup(position, -1)
+		spell.setup(global_position, -1)

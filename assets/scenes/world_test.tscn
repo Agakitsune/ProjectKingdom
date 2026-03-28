@@ -131,6 +131,7 @@ tile_map_data = PackedByteArray("AAAAABEAAAADAAMAAAABABEAAAADAAMAAAACABEAAAADAAM
 tile_set = SubResource("TileSet_ep7hj")
 
 [node name="Player" parent="." unique_id=1460901200 instance=ExtResource("2_ly026")]
+position = Vector2(165, 22)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=576688056]
 

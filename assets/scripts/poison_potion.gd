@@ -62,15 +62,14 @@ func set_particles():
 	for i in range(30):
 		var follow = PathFollow2D.new()
 		path_2d.add_child(follow)
-		follow.progress_ratio = i / 30.0
+		if i / 30.0 > 0:
+			follow.progress_ratio = i / 30.0
 		var particle = POISON_PARTICLE.instantiate()
 		particles.append(particle)
 		follow.add_child(particle)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if sprite_2d:
-		print(sprite_2d.global_position)
 	if not collided:
 		velocity.y += gravity * delta * 0.4
 		position += velocity * delta
