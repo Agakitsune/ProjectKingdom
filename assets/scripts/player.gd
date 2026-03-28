@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Player
 
+@export_range(0, 100, 1.0, "or_greater") var health := 20
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var whip: Area2D = %Whip
@@ -17,10 +19,20 @@ var _stair_index := 0
 
 var _stair_tween: Tween
 
+var _health := health
+var _hurt := false
+var _invicible := false
+
 func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
+	if _health <= 0:
+		return
+	
+	if _hurt:
+		return
+	
 	if event.is_action_pressed("attack"):
 		if Input.is_action_pressed("down") and is_on_floor():
 			animation_player.play("crouch_attack")
@@ -70,6 +82,44 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _health <= 0:
+		velocity.y = move_toward(
+			velocity.y,
+			0.0,
+			delta * 24.0
+		)
+		velocity.x = move_toward(
+			velocity.x,
+			0.0,
+			delta * 4.0
+		)
+		
+		if velocity.length() <= 0.01:
+			print("ZA WARUDO")
+			pass # TODO: Reset the current zone
+		
+		move_and_slide()
+		return
+	
+	if _hurt:
+		velocity += get_gravity() * delta
+		
+		move_and_slide()
+		
+		if is_on_floor():
+			velocity.x = 0
+			var timer := get_tree().create_timer(0.5).timeout.connect(
+				func():
+					(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", true)
+					_hurt = false
+			)
+			var invi := get_tree().create_timer(1.5).timeout.connect(
+				func():
+					(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", false)
+					_invicible = false
+			)
+		return
+	
 	if _use_stair:
 		if not (_stair_tween and _stair_tween.is_running()):
 			if Input.is_action_pressed("up") and not _stair.lock_up:
@@ -126,16 +176,12 @@ func _physics_process(delta: float) -> void:
 	elif not_attack:
 		animation_player.play("idle")
 	
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("left", "right")
 	if direction:
 		if is_on_floor():
@@ -152,6 +198,24 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 
 	move_and_slide()
+
+
+func damage(x: int, direction: int):
+	if _invicible:
+		return
+	
+	_health -= x
+	
+	if _health <= 0:
+		animation_player.play("death")
+		velocity.y = -30
+		velocity.x = direction * 10
+	else:
+		_invicible = true
+		_hurt = true
+		velocity.y = -300
+		velocity.x = direction * 100
+		animation_player.play("hurt")
 
 
 func _set_offset(x: float):

@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 @export var player: Player
+@export var damage := 0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -21,3 +22,10 @@ func _damage():
 	var mat := gpu_particles_2d.process_material as ParticleProcessMaterial
 	mat.direction.x = 1.0 if sprite_2d.flip_h else -1.0
 	gpu_particles_2d.restart()
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	var n := global_position.direction_to(body.global_position)
+	
+	if damage > 0:
+		body.damage(damage, -1 if n.x < 0 else 1)

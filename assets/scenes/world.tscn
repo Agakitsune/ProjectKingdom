@@ -59,6 +59,7 @@ player = NodePath("../Player")
 [node name="Dummy2" parent="." unique_id=467831983 node_paths=PackedStringArray("player") instance=ExtResource("4_0moxn")]
 position = Vector2(-321, -73)
 player = NodePath("../Player")
+damage = 20
 
 [node name="Stair4" parent="." unique_id=1386469277 instance=ExtResource("5_vu0c7")]
 position = Vector2(1192, 192)

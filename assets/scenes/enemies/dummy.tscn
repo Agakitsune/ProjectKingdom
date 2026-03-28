@@ -49,3 +49,12 @@ trail_lifetime = 0.15000000000000002
 trail_sections = 2
 trail_section_subdivisions = 1
 process_material = SubResource("ParticleProcessMaterial_58ru8")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=535399258]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=38655141]
+shape = SubResource("RectangleShape2D_l8rlx")
+debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

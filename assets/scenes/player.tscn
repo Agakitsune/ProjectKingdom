@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://cmqvmp10c0c7c"]
 
+[ext_resource type="Shader" uid="uid://csvkxjrbtwyb5" path="res://assets/shaders/player.gdshader" id="1_14505"]
 [ext_resource type="Script" uid="uid://bp1wu7hx4xhvp" path="res://assets/scripts/player.gd" id="1_rwm0n"]
 [ext_resource type="Texture2D" uid="uid://bp3agwljj1fi7" path="res://assets/textures/tmp_hakurei.png" id="2_s027a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4wcc8"]
+shader = ExtResource("1_14505")
+shader_parameter/active = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwm0n"]
 size = Vector2(32, 64)
@@ -452,6 +457,7 @@ script = ExtResource("1_rwm0n")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470087265]
 texture_filter = 1
 texture_repeat = 2
+material = SubResource("ShaderMaterial_4wcc8")
 texture = ExtResource("2_s027a")
 region_enabled = true
 region_rect = Rect2(16, 64, 128, 64)
@@ -470,7 +476,7 @@ collision_mask = 4
 
 [node name="WhipShape" type="CollisionShape2D" parent="Whip" unique_id=1623542061]
 unique_name_in_owner = true
-position = Vector2(53, 10)
+position = Vector2(53, -6)
 shape = SubResource("RectangleShape2D_s027a")
 disabled = true
 debug_color = Color(0.9995424, 0, 0.124113865, 0.41960785)
