@@ -10,6 +10,9 @@ class_name Stair
 @export var length := 0:
 	set = _set_length
 
+var lock_up := false
+var lock_down := false
+
 func _ready() -> void:
 	_update_shape()
 

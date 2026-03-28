@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name Player
 
-@onready var camera: Camera2D = $Camera2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var whip: Area2D = %Whip
@@ -9,6 +8,8 @@ class_name Player
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
+
+var actual_zone: Zone
 
 var _stair: Stair
 var _use_stair := false
@@ -24,7 +25,7 @@ func _input(event: InputEvent) -> void:
 		animation_player.play("attack")
 		whip_shape.disabled = false
 	elif event.is_action_pressed("up"):
-		if _stair and not _use_stair and _stair._player_ratio(self) < 0.5:
+		if _stair and not _use_stair and _stair._player_ratio(self) < 0.5 and not _stair.lock_up:
 			_stair._player_use(self, is_on_floor())
 			_use_stair = true
 			var start := _stair.sample(_stair_index * 22.67).x
@@ -44,7 +45,7 @@ func _input(event: InputEvent) -> void:
 			sprite_2d.flip_h = _stair.flip_h
 			whip.scale.x = -1.0 if sprite_2d.flip_h else 1.0
 	elif event.is_action_pressed("down"):
-		if _stair and not _use_stair and _stair._player_ratio(self) > 0.5:
+		if _stair and not _use_stair and _stair._player_ratio(self) > 0.5 and not _stair.lock_down:
 			_stair._player_use(self, is_on_floor())
 			_use_stair = true
 			var start := _stair.sample(_stair_index * 22.67).x
@@ -68,7 +69,7 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if _use_stair:
 		if not (_stair_tween and _stair_tween.is_running()):
-			if Input.is_action_pressed("up"):
+			if Input.is_action_pressed("up") and not _stair.lock_up:
 				animation_player.play("stair_up")
 				_stair_index += 1
 				if _stair_index >= _stair.length * 2:
@@ -95,7 +96,7 @@ func _physics_process(delta: float) -> void:
 				
 				sprite_2d.flip_h = _stair.flip_h
 				whip.scale.x = -1.0 if sprite_2d.flip_h else 1.0
-			elif Input.is_action_pressed("down"):
+			elif Input.is_action_pressed("down") and not _stair.lock_down:
 				animation_player.play("stair_down")
 				_stair_index -= 1
 				if _stair_index < 0:
@@ -146,13 +147,6 @@ func _set_offset(x: float):
 		sprite_2d.offset.x = -x
 	else:
 		sprite_2d.offset.x = x
-
-
-func _use_limit(limit: CameraLimit):
-	camera.limit_left = limit.global_position.x
-	camera.limit_top = limit.global_position.y
-	camera.limit_right = limit.global_position.x + limit.size.x
-	camera.limit_bottom = limit.global_position.y + limit.size.y
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

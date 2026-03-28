@@ -4,4 +4,4 @@
 
 [node name="CameraLimit" type="Marker2D" unique_id=971700342]
 script = ExtResource("1_6fult")
-size = Vector2(450, 450)
+size = Vector2(480, 480)

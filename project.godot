@@ -31,6 +31,7 @@ folder_colors={
 "res://assets/scenes/enemies/": "orange",
 "res://assets/scripts/": "yellow",
 "res://assets/scripts/enemies/": "orange",
+"res://assets/scripts/resources/": "red",
 "res://assets/textures/": "purple",
 "res://assets/textures/spritesheets/": "pink",
 "res://assets/textures/tilesets/": "gray"
@@ -76,6 +77,7 @@ down={
 2d_physics/layer_3="entity"
 2d_physics/layer_4="item"
 2d_physics/layer_5="stair"
+2d_physics/layer_6="zone"
 
 [physics]
 

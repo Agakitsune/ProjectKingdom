@@ -2,20 +2,11 @@
 extends Marker2D
 class_name CameraLimit
 
-@export var size: Vector2:
-	set(s):
-		size = s
-		if Engine.is_editor_hint():
-			queue_redraw()
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@export var size: Vector2
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	_update()
 
 
 func _draw() -> void:
@@ -23,3 +14,7 @@ func _draw() -> void:
 		Vector2.ZERO, size
 	)
 	draw_rect(r, Color.YELLOW, false, 0.5, true)
+
+
+func _update():
+	queue_redraw()

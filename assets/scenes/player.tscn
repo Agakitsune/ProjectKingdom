@@ -143,7 +143,7 @@ size = Vector2(88, 20)
 size = Vector2(32, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=1300672341]
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("1_rwm0n")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470087265]
@@ -156,8 +156,6 @@ region_rect = Rect2(64, 0, 64, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543934188]
 shape = SubResource("RectangleShape2D_rwm0n")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=471507383]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=803532606]
 libraries/ = SubResource("AnimationLibrary_14505")
