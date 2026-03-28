@@ -30,8 +30,9 @@ func _on_process(delta: float):
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if _active:
-		if player.is_on_floor():
+		if not player.is_on_floor():
 			change_state.emit("Fall")
+			return
 		var direction := Input.get_axis("left", "right")
 		if direction:
 			change_state.emit("Walk")
