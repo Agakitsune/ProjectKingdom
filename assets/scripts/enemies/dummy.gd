@@ -6,16 +6,22 @@ extends CharacterBody2D
 @export var player: Player
 @export var damage := 0
 
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
 	if is_inside_tree():
-		var t := global_position.direction_to(player.global_position)
-		sprite_2d.flip_h = t.x < 0.0
+		if player:
+			var t := global_position.direction_to(player.global_position)
+			sprite_2d.flip_h = t.x < 0.0
 
 	move_and_slide()
+
+
+func copy_from_base(d: CharacterBody2D):
+	damage = d.damage
 
 
 func _damage():

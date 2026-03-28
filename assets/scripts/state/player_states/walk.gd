@@ -2,6 +2,7 @@ extends PlayerState
 class_name PlayerWalkState
 
 func _on_enter(previous: StringName):
+	print(player.global_position)
 	player.animation_player.play("walk")
 
 func _on_exit(next: StringName):
@@ -33,10 +34,16 @@ func _on_process(delta: float):
 	
 	player.sprite_2d.flip_h = direction < 0.0
 	
+	print(player.velocity)
+	
 	player.velocity.x = direction * player.SPEED
 	player.velocity += player.get_gravity() * delta
 	
+	print(player.velocity)
+	
 	player.move_and_slide()
+	
+	print("walk: ", player.position)
 	
 	if not player.is_on_floor():
 		change_state.emit("Fall")
