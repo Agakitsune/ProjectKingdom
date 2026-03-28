@@ -28,8 +28,6 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	print(player.global_position)
-	
 	if not (_camera_tween and _camera_tween.is_running()):
 		camera_control.global_position = player.global_position
 		camera_control.global_position = _stage.snapv_into(camera_control.global_position)

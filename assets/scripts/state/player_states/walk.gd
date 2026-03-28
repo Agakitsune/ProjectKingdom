@@ -22,28 +22,32 @@ func _on_input(event: InputEvent):
 	elif event.is_action_pressed("down"):
 		if machine.test_state("Stair", false):
 			change_state.emit("Stair")
-		else:
-			change_state.emit("Crouch")
 
 func _on_process(delta: float):
-	var direction := Input.get_axis("left", "right")
+	var direction := signf(Input.get_axis("left", "right"))
 	
 	if not direction:
-		change_state.emit("Idle")
+		if Input.is_action_pressed("down"):
+			change_state.emit("Crouch")
+		else:
+			change_state.emit("Idle")
 		return
 	
 	player.sprite_2d.flip_h = direction < 0.0
 	
-	print(player.velocity)
-	
 	player.velocity.x = direction * player.SPEED
 	player.velocity += player.get_gravity() * delta
 	
-	print(player.velocity)
-	
 	player.move_and_slide()
-	
-	print("walk: ", player.position)
 	
 	if not player.is_on_floor():
 		change_state.emit("Fall")
+
+
+func _on_stair_collider_area_entered(area: Area2D) -> void:
+	if Input.is_action_pressed("up"):
+		machine.test_state("Stair", true)
+		change_state.emit("Stair")
+	elif Input.is_action_pressed("down"):
+		machine.test_state("Stair", false)
+		change_state.emit("Stair")

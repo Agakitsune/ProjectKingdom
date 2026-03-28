@@ -22,7 +22,7 @@ func _on_process(delta: float):
 		change_state.emit("Fall")
 		return
 	
-	var direction := Input.get_axis("left", "right")
+	var direction := signf(Input.get_axis("left", "right"))
 	
 	player.velocity.x = direction * player.SPEED
 	player.move_and_slide()

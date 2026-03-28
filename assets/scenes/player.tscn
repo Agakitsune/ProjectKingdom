@@ -527,5 +527,6 @@ metadata/_custom_type_script = "uid://d152d6p373a8h"
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/StairAttack" method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Whip" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="StairCollider" to="." method="_on_stair_collider_body_entered"]
+[connection signal="area_entered" from="StairCollider" to="StateMachine/Walk" method="_on_stair_collider_area_entered"]
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Fall" method="_on_stair_collider_area_entered"]
 [connection signal="area_exited" from="StairCollider" to="." method="_on_stair_collider_body_exited"]

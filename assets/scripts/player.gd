@@ -18,13 +18,8 @@ var actual_zone: Zone
 var _lives := lives
 
 var _stair: Stair
-var _use_stair := false
-var _stair_index := 0
-
-var _stair_tween: Tween
 
 var _health := health
-var _hurt := false
 var _invicible := false
 
 signal damage_taken(direction: int)
@@ -75,9 +70,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_stair_collider_body_entered(body: Node2D) -> void:
+	print("fdp")
 	_stair = body.get_parent() as Stair
 
 
 func _on_stair_collider_body_exited(body: Node2D) -> void:
-	if not _use_stair:
-		_stair = null
+	_stair = null

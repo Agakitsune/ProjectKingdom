@@ -43,7 +43,7 @@ func _set_length(l: int):
 
 func _update_shape():
 	var p := _get_flip() * length
-	var s := _get_flip() * (length + 0.1)
+	var s := _get_flip() * (length + 0.2)
 	
 	path_2d.curve.set_point_position(
 		1, p
