@@ -32,6 +32,9 @@ folder_colors={
 "res://assets/scripts/": "yellow",
 "res://assets/scripts/enemies/": "orange",
 "res://assets/scripts/resources/": "red",
+"res://assets/scripts/state/": "pink",
+"res://assets/scripts/state/player_states/": "gray",
+"res://assets/shaders/": "blue",
 "res://assets/textures/": "purple",
 "res://assets/textures/spritesheets/": "pink",
 "res://assets/textures/tilesets/": "gray"

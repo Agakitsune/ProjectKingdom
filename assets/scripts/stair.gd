@@ -58,24 +58,24 @@ func _player_ratio(p: Player) -> float:
 	
 	return ratio
 
-func _player_use(p: Player, grounded := true):
+func _player_use(p: Player, grounded := true) -> int:
 	var ratio = _player_ratio(p)
 	
 	if grounded:
 		if ratio <= 0.5:
-			p._stair_index = 0
+			return 0
 		else:
-			p._stair_index = length * 2 - 1
+			return length * 2 - 1
 	else:
 		if ratio >= 1.0:
-			return
+			return 0
 		if ratio <= 0.0:
-			return
+			return 0
 		
 		var len := length * 2
 		ratio *= len
 		ratio = roundf(ratio)
 		
-		print(ratio)
-		
-		p._stair_index = ratio as int
+		return ratio as int
+	
+	return 0
