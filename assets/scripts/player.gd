@@ -22,7 +22,10 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
-		animation_player.play("attack")
+		if Input.is_action_pressed("down") and is_on_floor():
+			animation_player.play("crouch_attack")
+		else:
+			animation_player.play("attack")
 		whip_shape.disabled = false
 	elif event.is_action_pressed("up"):
 		if _stair and not _use_stair and _stair._player_ratio(self) < 0.5 and not _stair.lock_up:
@@ -115,6 +118,14 @@ func _physics_process(delta: float) -> void:
 				whip.scale.x = -1.0 if sprite_2d.flip_h else 1.0
 		return
 	
+	var not_attack := not animation_player.current_animation.contains("attack")
+	
+	if Input.is_action_pressed("down") and is_on_floor():
+		if not_attack:
+			animation_player.play("crouch")
+	elif not_attack:
+		animation_player.play("idle")
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -129,6 +140,7 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		if is_on_floor():
 			if animation_player.current_animation != "attack":
+				animation_player.play("walk")
 				sprite_2d.flip_h = direction < 0.0
 				whip.scale.x = -1.0 if sprite_2d.flip_h else 1.0
 				velocity.x = direction * SPEED
@@ -152,6 +164,9 @@ func _set_offset(x: float):
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack":
 		animation_player.play("idle")
+		whip_shape.disabled = true
+	elif anim_name == "crouch_attack":
+		animation_player.play("crouch")
 		whip_shape.disabled = true
 
 
