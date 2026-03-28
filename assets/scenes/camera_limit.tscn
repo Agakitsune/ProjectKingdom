@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://byitluxrma1j4"]
+
+[ext_resource type="Script" uid="uid://da4rq28vf6up5" path="res://assets/scripts/camera_limit.gd" id="1_6fult"]
+
+[node name="CameraLimit" type="Marker2D" unique_id=971700342]
+script = ExtResource("1_6fult")
+size = Vector2(480, 480)
