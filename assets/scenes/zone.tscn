@@ -8,7 +8,6 @@ size = Vector2(640, 360)
 
 [node name="Zone" type="Marker2D" unique_id=720914504]
 script = ExtResource("1_uu5ol")
-bossroom = null
 
 [node name="Zone" type="StaticBody2D" parent="." unique_id=64155911]
 collision_layer = 32

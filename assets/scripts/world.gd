@@ -9,6 +9,9 @@ extends Node2D
 
 @onready var player: Player = $Player
 
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
+@onready var debug: Control = $CanvasLayer/Debug
+
 var _camera_tween : Tween
 var _stage: Stage
 
@@ -23,6 +26,9 @@ func _ready() -> void:
 	_stage.spawn_in(player)
 	_stage.zone_loaded.connect(_on_zone_loaded)
 	_stage.boss_triggered.connect(_on_boss_trigger)
+	_stage.process_mode = Node.PROCESS_MODE_PAUSABLE
+	
+	debug.set_stage(_stage)
 
 
 func _physics_process(delta: float) -> void:
@@ -33,7 +39,16 @@ func _physics_process(delta: float) -> void:
 		camera_control.global_position = player.global_position
 		camera_control.global_position = _stage.snapv_into(camera_control.global_position)
 	
+	set_process_input(true)
+	
 	_stage.update(player)
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug"):
+		set_process_input(false)
+		debug.show()
+		get_tree().paused = true
 
 
 func _on_zone_loaded(next: Zone):
@@ -57,6 +72,13 @@ func _on_zone_loaded(next: Zone):
 			_stage.set_current(next)
 			get_tree().paused = false
 	)
+
+
+func _on_debug_teleport(zone: Zone, anchor: Marker2D):
+	_stage.force_load(zone, anchor)
+	_stage.reset_screen(player, camera)
+	camera_control.global_position = player.global_position
+	camera_control.global_position = _stage.snapv_into(camera_control.global_position)
 
 
 func _on_boss_trigger(b: Node2D):

@@ -43,7 +43,6 @@ length = 4
 [node name="Zone" parent="." unique_id=64155911 instance=ExtResource("5_6500g")]
 position = Vector2(-160, -116)
 shrink_right = 32.0
-bossroom = false
 
 [node name="Marker2D" type="Marker2D" parent="Zone" unique_id=1504058035]
 position = Vector2(-192, 116)
@@ -57,7 +56,6 @@ next_zone = NodePath("../../Zone2")
 position = Vector2(768, -116)
 width = 1280.0
 shrink_right = 32.0
-bossroom = false
 
 [node name="Marker2D2" type="Marker2D" parent="Zone2" unique_id=606367319]
 position = Vector2(-608, 116)
@@ -93,7 +91,6 @@ scene = ExtResource("8_h6j12")
 [node name="Zone3" parent="." unique_id=720914504 instance=ExtResource("5_6500g")]
 position = Vector2(768, 212)
 width = 1280.0
-bossroom = false
 
 [node name="Door2" parent="Zone3" unique_id=627871055 node_paths=PackedStringArray("next_zone", "stairs", "respawn") instance=ExtResource("6_41ltd")]
 position = Vector2(192, -180)
