@@ -213,9 +213,6 @@ func _on_bossdoor_closed():
 	
 	var boss := _spawners[0].get_child(0)
 	boss.defeated.connect(_on_boss_defeated)
-	#boss.summoned.connect(_on_boss_summoned)
-	
-	#get_tree().paused = true
 	
 	boss_triggered.emit(boss)
 
@@ -223,7 +220,7 @@ func _on_bossdoor_closed():
 func _on_boss_defeated():
 	var artefact := ARTEFACT.instantiate()
 	
-	add_child(artefact)
+	add_child.call_deferred(artefact)
 	artefact.position.y = -64
 
 
