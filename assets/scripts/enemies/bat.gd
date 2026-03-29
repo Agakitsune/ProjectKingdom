@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 						velocity.x = 70.0 if sprite_2d.flip_h else -70
 				)
 
-func _damage():
+func _damage(x: float):
 	queue_free()
 
 

@@ -6,11 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://wcd837llsoas" path="res://assets/scenes/zone.tscn" id="5_6500g"]
 [ext_resource type="PackedScene" uid="uid://baq5fcblgjmfu" path="res://assets/scenes/door.tscn" id="6_41ltd"]
 [ext_resource type="PackedScene" uid="uid://cjl8y4uha22l4" path="res://assets/scenes/enemies/enemy_spawner.tscn" id="7_75l5r"]
-[ext_resource type="PackedScene" uid="uid://cejn7c1yabaqn" path="res://assets/scenes/enemies/medusa_spawner.tscn" id="7_jqnao"]
 [ext_resource type="PackedScene" uid="uid://vh32jlg0vwko" path="res://assets/scenes/bossdoor.tscn" id="8_fwjji"]
 [ext_resource type="PackedScene" uid="uid://b7h6dcjssbhuo" path="res://assets/scenes/enemies/dummy.tscn" id="8_h6j12"]
-[ext_resource type="PackedScene" uid="uid://cnia5frfpdk36" path="res://assets/scenes/enemies/bat.tscn" id="8_ss3ck"]
-[ext_resource type="Script" uid="uid://dwkkhbovxbnw5" path="res://assets/scripts/enemies/bat.gd" id="9_6500g"]
+[ext_resource type="PackedScene" uid="uid://dco1meqn7q4n7" path="res://assets/scenes/enemies/gear_spawner.tscn" id="11_41ltd"]
+[ext_resource type="PackedScene" uid="uid://lk8jwfpwcrl7" path="res://assets/scenes/enemies/iron_golem.tscn" id="11_6500g"]
+[ext_resource type="Script" uid="uid://ckmxhucoh72lf" path="res://assets/scripts/enemies/iron_golem.gd" id="12_41ltd"]
+[ext_resource type="Script" uid="uid://dggk4yj70elsj" path="res://assets/scripts/enemies/gear_spawner.gd" id="12_75l5r"]
 
 [node name="Stage0" type="Node2D" unique_id=1782814269 node_paths=PackedStringArray("start")]
 texture_filter = 1
@@ -79,21 +80,6 @@ position = Vector2(640, 52)
 size = 64
 next_zone = NodePath("../../Zone4")
 
-[node name="EnemySpawner" parent="Zone2" unique_id=1116918349 instance=ExtResource("7_75l5r")]
-position = Vector2(-64, 0)
-scene = ExtResource("7_jqnao")
-
-[node name="MedusaSpawner" parent="Zone2/EnemySpawner" unique_id=410543599 instance=ExtResource("7_jqnao")]
-width = 1152.0
-height = 360.0
-
-[node name="EnemySpawner2" parent="Zone2" unique_id=438342309 instance=ExtResource("7_75l5r")]
-position = Vector2(-160, 20)
-scene = ExtResource("8_ss3ck")
-
-[node name="Bat" type="CharacterBody2D" parent="Zone2/EnemySpawner2" unique_id=875865574 instance=ExtResource("8_ss3ck")]
-script = ExtResource("9_6500g")
-
 [node name="Zone3" parent="." unique_id=720914504 instance=ExtResource("5_6500g")]
 position = Vector2(768, 212)
 width = 1280.0
@@ -128,9 +114,20 @@ position = Vector2(-624, 84)
 
 [node name="EnemySpawner" parent="Zone4" unique_id=969252928 instance=ExtResource("7_75l5r")]
 position = Vector2(0, 84)
-scene = ExtResource("8_h6j12")
+scene = ExtResource("11_6500g")
 
-[node name="Dummy" parent="Zone4/EnemySpawner" unique_id=2141994947 instance=ExtResource("8_h6j12")]
-health = 1
+[node name="IronGolem" type="CharacterBody2D" parent="Zone4/EnemySpawner" unique_id=2088610492 instance=ExtResource("11_6500g")]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("12_41ltd")
+
+[node name="EnemySpawner2" parent="Zone4" unique_id=1116918349 instance=ExtResource("7_75l5r")]
+position = Vector2(-608, -140)
+scene = ExtResource("11_41ltd")
+
+[node name="GearSpawner" type="Marker2D" parent="Zone4/EnemySpawner2" unique_id=1367618323 instance=ExtResource("11_41ltd")]
+script = ExtResource("12_75l5r")
+range = 1216.0
 
 [connection signal="boss_triggered" from="Zone4" to="." method="_on_boss_triggered"]
+[connection signal="earthquaked" from="Zone4/EnemySpawner/IronGolem" to="Zone4" method="_on_iron_golem_earthquaked"]

@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://csmofqalgn2je"]
+
+[ext_resource type="Script" uid="uid://cswyh8g0o3ha7" path="res://assets/scripts/enemies/gear.gd" id="1_jikqb"]
+[ext_resource type="Texture2D" uid="uid://s2gfr7uc7cwi" path="res://assets/textures/spritesheets/iron_golem.png" id="2_js06m"]
+[ext_resource type="Texture2D" uid="uid://cyk3e1wc8igi5" path="res://assets/textures/spritesheets/flame.png" id="3_js06m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h8tq"]
+resource_local_to_scene = true
+atlas = ExtResource("2_js06m")
+region = Rect2(0, 16, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw6hv"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jikqb"]
+size = Vector2(8, 8)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2h8tq"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pw6hv"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 8, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+collision_mode = 2
+
+[sub_resource type="Animation" id="Animation_js06m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_2h8tq"]
+resource_name = "fall"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_fall"
+}, {
+"args": [],
+"method": &"fall"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D6:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tk224"]
+_data = {
+&"RESET": SubResource("Animation_js06m"),
+&"fall": SubResource("Animation_2h8tq")
+}
+
+[node name="Gear" type="CharacterBody2D" unique_id=930237263]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_jikqb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=345083150]
+texture_filter = 1
+texture = SubResource("AtlasTexture_2h8tq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1203237754]
+shape = SubResource("RectangleShape2D_pw6hv")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1769048856]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1953204393]
+shape = SubResource("RectangleShape2D_jikqb")
+disabled = true
+debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[node name="GPUParticles2D6" type="GPUParticles2D" parent="." unique_id=1823950158]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_2h8tq")
+emitting = false
+amount = 16
+texture = ExtResource("3_js06m")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_pw6hv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=293953382]
+libraries/ = SubResource("AnimationLibrary_tk224")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -265,3 +265,7 @@ func _update_shape():
 	
 	collision_shape_2d.position = r.get_center()
 	(collision_shape_2d.shape as RectangleShape2D).size = r.size
+
+
+func _on_iron_golem_earthquaked() -> void:
+	_spawners[1]._instance.random_fall() # Very hacky but don't care :)

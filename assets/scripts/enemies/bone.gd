@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func _damage():
+func _damage(x: float):
 	queue_free()
 
 

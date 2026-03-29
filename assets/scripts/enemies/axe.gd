@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 			queue_free()
 
 
-func _damage():
+func _damage(x: float):
 	destroyed.emit()
 	queue_free()
 

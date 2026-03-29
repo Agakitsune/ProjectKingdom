@@ -102,7 +102,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage()
+	body._damage(2.0)
 
 
 func _on_whip_area_entered(area: Area2D) -> void:
