@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://b7h6dcjssbhuo"]
+
+[ext_resource type="Script" uid="uid://kg4ai4bw5rkg" path="res://assets/scripts/enemies/dummy.gd" id="1_nh27i"]
+[ext_resource type="Texture2D" uid="uid://bfpghta7c78k0" path="res://assets/textures/tmp_dummy.png" id="2_o0r1y"]
+[ext_resource type="Texture2D" uid="uid://dwafhoew0qpy7" path="res://assets/textures/base_particle.png" id="3_o0r1y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8rlx"]
+size = Vector2(32, 64)
+
+[sub_resource type="Gradient" id="Gradient_ga58v"]
+offsets = PackedFloat32Array(0, 0.8731884, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 1, 0.8156863, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iui66"]
+gradient = SubResource("Gradient_ga58v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_58ru8"]
+particle_flag_disable_z = true
+spread = 25.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+color = Color(1, 0.9607843, 1, 1)
+color_ramp = SubResource("GradientTexture1D_iui66")
+collision_mode = 2
+
+[sub_resource type="Animation" id="Animation_o0r1y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ga58v"]
+resource_name = "summon"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iui66"]
+_data = {
+&"RESET": SubResource("Animation_o0r1y"),
+&"summon": SubResource("Animation_ga58v")
+}
+
+[node name="Dummy" type="CharacterBody2D" unique_id=1700489123]
+texture_filter = 1
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_nh27i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1089929486]
+texture = ExtResource("2_o0r1y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1489058247]
+shape = SubResource("RectangleShape2D_l8rlx")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=597741167]
+emitting = false
+amount = 16
+texture = ExtResource("3_o0r1y")
+lifetime = 5.0
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.15000000000000002
+trail_sections = 2
+trail_section_subdivisions = 1
+process_material = SubResource("ParticleProcessMaterial_58ru8")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=535399258]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=38655141]
+shape = SubResource("RectangleShape2D_l8rlx")
+debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=549035060]
+libraries/ = SubResource("AnimationLibrary_iui66")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

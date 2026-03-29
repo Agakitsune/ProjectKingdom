@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://wcd837llsoas"]
+
+[ext_resource type="Script" uid="uid://brl58vqgb1upd" path="res://assets/scripts/zone.gd" id="1_uu5ol"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu5ol"]
+resource_local_to_scene = true
+size = Vector2(640, 360)
+
+[node name="Zone" type="Marker2D" unique_id=720914504]
+script = ExtResource("1_uu5ol")
+
+[node name="Zone" type="StaticBody2D" parent="." unique_id=64155911]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone" unique_id=901786950]
+shape = SubResource("RectangleShape2D_uu5ol")
+disabled = true
+debug_color = Color(1, 0.8333334, 0, 0)

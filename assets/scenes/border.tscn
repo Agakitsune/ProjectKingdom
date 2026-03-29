@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cbvh0ukj87g1e"]
+
+[ext_resource type="Script" uid="uid://7aef5jwvvagx" path="res://assets/scripts/border.gd" id="1_xqb4u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r05yi"]
+resource_local_to_scene = true
+size = Vector2(32, 0)
+
+[node name="Border" type="Marker2D" unique_id=1274596384]
+script = ExtResource("1_xqb4u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=225401570]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1755221229]
+position = Vector2(-16, 0)
+shape = SubResource("RectangleShape2D_r05yi")
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=372971808]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=61237917]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_r05yi")
+debug_color = Color(0.85460657, 0.36885408, 0, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

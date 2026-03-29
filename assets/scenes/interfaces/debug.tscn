@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://r42ai604nfm8"]
+
+[ext_resource type="Script" uid="uid://d2mg0knto4o00" path="res://assets/scripts/debug.gd" id="1_ilerc"]
+
+[node name="Debug" type="Control" unique_id=393424126]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ilerc")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1653895044]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5019608)
