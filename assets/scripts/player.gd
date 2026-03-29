@@ -26,6 +26,7 @@ var _spell: Spell
 
 signal damage_taken(direction: int)
 signal dead()
+signal stage_cleared()
 
 func _ready() -> void:
 	_lives = lives
@@ -54,7 +55,7 @@ func damage(x: int, direction: int):
 
 func can_cast() -> bool:
 	if _spell:
-		return false
+		return true
 	return false
 
 func cast():
@@ -66,6 +67,11 @@ func cast():
 		get_parent().add_child(instance)
 		
 		instance.global_position = global_position
+
+func stage_clear():
+	get_tree().paused = true
+	
+	stage_cleared.emit()
 
 func _set_offset(x: float):
 	if sprite_2d.flip_h:

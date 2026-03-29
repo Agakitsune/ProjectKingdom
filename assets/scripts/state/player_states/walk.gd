@@ -2,7 +2,6 @@ extends PlayerState
 class_name PlayerWalkState
 
 func _on_enter(previous: StringName):
-	print(player.global_position)
 	player.animation_player.play("walk")
 
 func _on_exit(next: StringName):

@@ -22,6 +22,7 @@ func _ready() -> void:
 	
 	_stage.spawn_in(player)
 	_stage.zone_loaded.connect(_on_zone_loaded)
+	_stage.boss_triggered.connect(_on_boss_trigger)
 
 
 func _physics_process(delta: float) -> void:
@@ -58,6 +59,37 @@ func _on_zone_loaded(next: Zone):
 	)
 
 
+func _on_boss_trigger(b: Node2D):
+	var next_pos := b.global_position
+	var time := camera.get_screen_center_position().distance_to(next_pos) / 650.0
+	
+	_camera_tween = create_tween()
+	_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	get_tree().paused = true
+	
+	_camera_tween.tween_property(
+		camera_control, "global_position", b.global_position, time
+	).set_trans(Tween.TRANS_SINE)
+	_camera_tween.tween_callback(
+		func():
+			b.summon()
+	)
+	
+	await b.summoned
+	
+	_camera_tween = create_tween()
+	_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	
+	_camera_tween.tween_property(
+		camera_control, "global_position", player.global_position, time
+	).set_trans(Tween.TRANS_SINE)
+	_camera_tween.tween_callback(
+		func():
+			get_tree().paused = false
+	)
+
+
 func _set_stage(x: PackedScene):
 	stage = x
 	
@@ -75,3 +107,8 @@ func _on_player_dead() -> void:
 		player._lives -= 1
 	else:
 		_stage.reset(player, camera)
+
+
+func _on_player_stage_cleared() -> void:
+	# Handle Stage logic here
+	pass
