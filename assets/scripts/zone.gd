@@ -12,23 +12,44 @@ class_name Zone
 @export var shrink_right := 0.0:
 	set = _set_right
 
-@export var doors: Array[Door]
-@export var zones: Array[Zone]
-@export var stairs: Array[Stair]
-
 @onready var collision_shape_2d: CollisionShape2D = $Zone/CollisionShape2D
 
 var _zone: Rect2
+var _doors: Array[Door]
+var _spawners: Array[EnemySpawner]
+var _respawn: Array[Marker2D]
+
+var _active_respawn: Marker2D
 
 func _ready() -> void:
 	_zone.size = Vector2(width, height)
 	_zone.position = global_position - _zone.size / 2.0
+	
+	for c in get_children():
+		if c is EnemySpawner:
+			_spawners.push_back(c)
+		elif c is Door:
+			_doors.push_back(c)
+		elif c is Marker2D:
+			_respawn.push_back(c)
+	
+	_active_respawn = _respawn[0]
 	
 	_update_shape()
 
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
+		_spawners = []
+		_respawn = []
+		for c in get_children():
+			if c is EnemySpawner:
+				_spawners.push_back(c)
+			elif c is Door:
+				continue
+			elif c is Marker2D:
+				_respawn.push_back(c)
+		
 		queue_redraw()
 
 
@@ -52,58 +73,35 @@ func _draw() -> void:
 	var font := c.get_theme_default_font()
 	c.free()
 	
-	if Engine.is_editor_hint():
-		for d in doors:
-			var start: Vector2
-			var end: Vector2
-			var normal: Vector2
-			
-			if d == null:
-				continue
-			
-			match d.side:
-				SIDE_LEFT:
-					normal.x = -1.0
-					start.x = up_left.x
-					start.y = up_left.y + d.min
-					end.x = up_left.x
-					end.y = up_left.y + d.max
-				SIDE_TOP:
-					normal.y = -1.0
-					start.x = up_left.x + d.min
-					start.y = up_left.y
-					end.x = up_left.x + d.max
-					end.y = up_left.y
-				SIDE_RIGHT:
-					normal.x = 1.0
-					start.x = down_right.x
-					start.y = up_left.y + d.min
-					end.x = down_right.x
-					end.y = up_left.y + d.max
-				SIDE_BOTTOM:
-					normal.y = 1.0
-					start.x = up_left.x + d.min
-					start.y = down_right.y
-					end.x = up_left.x + d.max
-					end.y = down_right.y
-			
-			var vec := (end - start).normalized()
-			var mid := (end - start) / 2.0
-			
-			for idx in d.stairs:
-				var p := to_local(stairs[idx].global_position)
-				draw_dashed_line(start + mid, p, Color.BROWN, 1.0, 5.0, true, false)
-			
-			draw_string(font, start - Vector2(4, 4), zones[d.next].name, 0, -1, 12)
-			draw_line(start, end, Color.CHARTREUSE, 2.0, false)
-			draw_colored_polygon(
-				[
-					start + mid + normal * 10.0,
-					start + mid + vec * 10.0,
-					start + mid - vec * 10.0,
-				],
-				Color.CHARTREUSE,
-			)
+	draw_string(font, r.position - Vector2(0, 4), self.name, 0, -1, 16, Color.YELLOW)
+	
+	for res in _respawn:
+		var s := to_local(res.global_position)
+		var rr: Rect2
+		rr.position = s - Vector2(16, 64)
+		rr.end = s + Vector2(16, 0)
+		draw_rect(rr, Color.DARK_ORANGE, false)
+		draw_string(font, rr.position - Vector2(0, 4), "Respawn " + self.name, 0, -1, 8)
+	
+	for s in _spawners:
+		var local := to_local(s.global_position)
+		
+		draw_dashed_line(
+			Vector2.ZERO,
+			local,
+			Color.TURQUOISE,
+			2.0,
+			15.0
+		)
+
+
+func reset():
+	collision_shape_2d.set_deferred("disabled", true)
+	
+	for d in _doors:
+		for st in d.stairs:
+			st.lock_up = false
+			st.lock_down = false
 
 
 func lock():
@@ -114,64 +112,30 @@ func is_inside(p: Vector2) -> bool:
 	return _zone.has_point(p)
 
 
-func load_zone(p: Vector2) -> Zone:
-	var s := SIDE_LEFT
+func fetch_door(p: Vector2) -> Door:
+	var s := 0
 	
 	if p.x < _zone.position.x:
-		s = SIDE_LEFT
+		s = 0
 	elif p.y < _zone.position.y:
-		s = SIDE_TOP
+		s = 1
 	elif p.x > _zone.end.x:
-		s = SIDE_RIGHT
+		s = 0
 	elif p.y > _zone.end.y:
-		s = SIDE_BOTTOM
+		s = 1
 	else:
 		return null # Is inside
 	
-	for d in doors:
+	for d in _doors:
 		if d.side != s:
 			continue
-		match d.side:
-			SIDE_LEFT:
-				var start := _zone.position.y + d.min
-				var end := _zone.position.y + d.max
-				if p.y >= start and p.y <= end:
-					if d.lock:
-						lock()
-					for st in stairs:
-						st.lock_up = d.stair_lock_up
-						st.lock_down = d.stair_lock_down
-					return zones[d.next]
-			SIDE_TOP:
-				var start := _zone.position.x + d.min
-				var end := _zone.position.x + d.max
-				if p.x >= start and p.x <= end:
-					if d.lock:
-						lock()
-					for st in stairs:
-						st.lock_up = d.stair_lock_up
-						st.lock_down = d.stair_lock_down
-					return zones[d.next]
-			SIDE_RIGHT:
-				var start := _zone.position.y + d.min
-				var end := _zone.position.y + d.max
-				if p.y >= start and p.y <= end:
-					if d.lock:
-						lock()
-					for st in stairs:
-						st.lock_up = d.stair_lock_up
-						st.lock_down = d.stair_lock_down
-					return zones[d.next]
-			SIDE_BOTTOM:
-				var start := _zone.position.x + d.min
-				var end := _zone.position.x + d.max
-				if p.x >= start and p.x <= end:
-					if d.lock:
-						lock()
-					for st in stairs:
-						st.lock_up = d.stair_lock_up
-						st.lock_down = d.stair_lock_down
-					return zones[d.next]
+		if d.is_inside(p):
+			if d.lock_zone:
+				lock()
+			for st in d.stairs:
+				st.lock_up = d.lock_stair == 0
+				st.lock_down = d.lock_stair == 1
+			return d
 	
 	return null
 

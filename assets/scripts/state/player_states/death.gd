@@ -29,7 +29,7 @@ func _on_process(delta: float):
 	)
 	
 	if vel.length() <= 0.01:
-		print("ZA WARUDO")
+		player.dead.emit()
 		return # TODO: Reset the current zone
 	
 	player.velocity = vel

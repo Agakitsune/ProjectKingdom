@@ -30,9 +30,6 @@ func _on_process(delta: float):
 	if direction:
 		change_state.emit("Walk")
 		player.sprite_2d.flip_h = direction < 0.0
-		
-		player.velocity.x = direction * player.SPEED
-		player.move_and_slide()
 
 func _on_animation_player_animation_started(anim_name: StringName) -> void:
 	pass # Replace with function body.
