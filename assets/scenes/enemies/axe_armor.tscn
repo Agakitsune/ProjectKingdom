@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://br56qj8pcpsi8" path="res://assets/textures/tmp_axe_armor.png" id="1_v654e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8163k"]
-size = Vector2(24, 48)
+size = Vector2(16, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfhpo"]
+size = Vector2(12, 40)
 
 [node name="AxeArmor" type="CharacterBody2D" unique_id=1696521833]
 collision_layer = 4
@@ -24,8 +27,8 @@ collision_layer = 0
 collision_mask = 129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1882302880]
-position = Vector2(0, 8)
-shape = SubResource("RectangleShape2D_8163k")
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_qfhpo")
 debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
 
 [node name="Timer" type="Timer" parent="." unique_id=881230878]

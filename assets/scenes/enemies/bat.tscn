@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cnia5frfpdk36"]
+
+[ext_resource type="Script" uid="uid://dwkkhbovxbnw5" path="res://assets/scripts/enemies/bat.gd" id="1_54avu"]
+[ext_resource type="Texture2D" uid="uid://kml55v07g7yx" path="res://assets/textures/tmp_bat.png" id="1_tt75m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54avu"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5arkq"]
+size = Vector2(12, 12)
+
+[node name="Bat" type="CharacterBody2D" unique_id=875865574]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_54avu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=16775758]
+texture_filter = 1
+texture = ExtResource("1_tt75m")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1591778535]
+shape = SubResource("RectangleShape2D_54avu")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=589588791]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=759417538]
+shape = SubResource("RectangleShape2D_5arkq")
+debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

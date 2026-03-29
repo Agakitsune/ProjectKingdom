@@ -4,7 +4,10 @@
 [ext_resource type="Script" uid="uid://p4j2b7h0mo5t" path="res://assets/scripts/enemies/skeleton.gd" id="1_eyxlo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eyxlo"]
-size = Vector2(24, 38)
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5t6m"]
+size = Vector2(12, 28)
 
 [node name="Skeleton" type="CharacterBody2D" unique_id=1189474586]
 collision_layer = 4
@@ -14,19 +17,17 @@ script = ExtResource("1_eyxlo")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1986357055]
 texture_filter = 1
 texture = ExtResource("1_3svbl")
-region_enabled = true
 region_rect = Rect2(0, 0, 32, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=919207553]
-position = Vector2(0, 13)
 shape = SubResource("RectangleShape2D_eyxlo")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1875523693]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1298953277]
-position = Vector2(0, 13)
-shape = SubResource("RectangleShape2D_eyxlo")
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_a5t6m")
 debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
 
 [node name="Cooldown" type="Timer" parent="." unique_id=1960078540]
