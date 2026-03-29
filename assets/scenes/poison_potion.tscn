@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dgr2pjr3j05qd"]
+
+[ext_resource type="Script" uid="uid://bvgbn80p6h02n" path="res://assets/scripts/poison_potion.gd" id="1_p68p6"]
+[ext_resource type="Texture2D" uid="uid://c03b6ygdd38ek" path="res://icon.svg" id="2_7jgkh"]
+
+[sub_resource type="Curve2D" id="Curve2D_7jgkh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jgkh"]
+size = Vector2(126.666664, 126.666664)
+
+[node name="PoisonPotion" type="Node2D" unique_id=351184812]
+script = ExtResource("1_p68p6")
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1474982011]
+curve = SubResource("Curve2D_7jgkh")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1140493697]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1437183402]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_7jgkh")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D" unique_id=1302182591]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D" unique_id=388789526]
+position = Vector2(1.5894572e-06, 1.5894572e-06)
+shape = SubResource("RectangleShape2D_7jgkh")
+
+[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_body_entered"]

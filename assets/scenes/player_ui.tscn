@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://chko5hpruymly"]
+
+[ext_resource type="Script" uid="uid://ck0w3ftehkaeo" path="res://assets/scripts/player_ui.gd" id="1_6pxpm"]
+
+[node name="PlayerUi" type="Control" unique_id=76737324]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6pxpm")
+
+[node name="HealthContainer" type="HBoxContainer" parent="." unique_id=945091463]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 31.0
+offset_right = 290.0
+offset_bottom = 71.0
