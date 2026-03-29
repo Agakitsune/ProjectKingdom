@@ -605,6 +605,9 @@ metadata/_custom_type_script = "uid://qtpfgjlnsaja"
 script = ExtResource("17_ratp2")
 metadata/_custom_type_script = "uid://bi1n0sarwbqwq"
 
+[node name="Timer" type="Timer" parent="." unique_id=1783592518]
+wait_time = 2.0
+
 [connection signal="damage_taken" from="." to="StateMachine/Damage" method="_on_player_damage_taken"]
 [connection signal="damage_taken" from="." to="StateMachine/Death" method="_on_player_damage_taken"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_player_animation_finished"]
@@ -616,3 +619,4 @@ metadata/_custom_type_script = "uid://bi1n0sarwbqwq"
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Walk" method="_on_stair_collider_area_entered"]
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Fall" method="_on_stair_collider_area_entered"]
 [connection signal="area_exited" from="StairCollider" to="." method="_on_stair_collider_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

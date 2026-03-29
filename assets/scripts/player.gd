@@ -9,6 +9,7 @@ class_name Player
 @onready var whip: Area2D = %Whip
 @onready var whip_shape: CollisionShape2D = %WhipShape
 @onready var state_machine: StateMachine = $StateMachine
+@onready var timer: Timer = $Timer
 
 const SPEED = 120.0
 const JUMP_VELOCITY = -350.0
@@ -52,6 +53,7 @@ func damage(x: int, direction: int):
 	else:
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
+		collision_layer = 0
 
 func can_cast() -> bool:
 	if _spell:
@@ -99,3 +101,8 @@ func _on_stair_collider_body_entered(body: Node2D) -> void:
 
 func _on_stair_collider_body_exited(body: Node2D) -> void:
 	_stair = null
+
+
+func _on_timer_timeout() -> void:
+	collision_layer = 1
+	(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", false)
