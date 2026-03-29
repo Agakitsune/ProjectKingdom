@@ -13,7 +13,7 @@ func _on_input(event: InputEvent):
 		change_state.emit("Jump")
 	elif event.is_action_pressed("attack"):
 		if Input.is_action_pressed("up"):
-			pass # Magic wooooo
+			change_state.emit("MagicAttack")
 		else:
 			change_state.emit("Attack")
 	elif event.is_action_pressed("up"):
@@ -29,6 +29,8 @@ func _on_process(delta: float):
 	if not direction:
 		if Input.is_action_pressed("down"):
 			change_state.emit("Crouch")
+		elif Input.is_action_pressed("up"):
+			change_state.emit("Magic")
 		else:
 			change_state.emit("Idle")
 		return

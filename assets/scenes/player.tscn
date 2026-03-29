@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://ix10sr4w1v6t" path="res://assets/scripts/state/player_states/death.gd" id="13_00pic"]
 [ext_resource type="Script" uid="uid://0qldyh1s5v03" path="res://assets/scripts/state/player_states/stair.gd" id="14_00pic"]
 [ext_resource type="Script" uid="uid://d152d6p373a8h" path="res://assets/scripts/state/player_states/stair_attack.gd" id="15_0bskb"]
+[ext_resource type="Script" uid="uid://qtpfgjlnsaja" path="res://assets/scripts/state/player_states/magic.gd" id="16_1dmvh"]
+[ext_resource type="Script" uid="uid://bi1n0sarwbqwq" path="res://assets/scripts/state/player_states/magic_attack.gd" id="17_ratp2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4wcc8"]
 shader = ExtResource("1_14505")
@@ -320,6 +322,55 @@ tracks/4/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_1dmvh"]
+resource_name = "magic"
+length = 0.001
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(128, 128, 64, 64)]
+}
+
+[sub_resource type="Animation" id="Animation_ratp2"]
+resource_name = "magic_attack"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(192, 128, 64, 64)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StateMachine/MagicAttack")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_cast"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_8sknh"]
 resource_name = "stair_down"
 length = 0.2
@@ -419,6 +470,8 @@ _data = {
 &"death": SubResource("Animation_tc801"),
 &"hurt": SubResource("Animation_o5c66"),
 &"idle": SubResource("Animation_s027a"),
+&"magic": SubResource("Animation_1dmvh"),
+&"magic_attack": SubResource("Animation_ratp2"),
 &"stair_down": SubResource("Animation_8sknh"),
 &"stair_up": SubResource("Animation_4wcc8"),
 &"walk": SubResource("Animation_60g6h")
@@ -439,7 +492,6 @@ texture_filter = 1
 texture_repeat = 2
 material = SubResource("ShaderMaterial_4wcc8")
 texture = ExtResource("2_s027a")
-offset = Vector2(40, 0)
 region_enabled = true
 region_rect = Rect2(16, 64, 128, 64)
 
@@ -457,7 +509,7 @@ collision_mask = 4
 
 [node name="WhipShape" type="CollisionShape2D" parent="Whip" unique_id=1623542061]
 unique_name_in_owner = true
-position = Vector2(45, -6)
+position = Vector2(53, -6)
 shape = SubResource("RectangleShape2D_s027a")
 disabled = true
 debug_color = Color(0.9995424, 0, 0.124113865, 0.41960785)
@@ -520,11 +572,20 @@ metadata/_custom_type_script = "uid://0qldyh1s5v03"
 script = ExtResource("15_0bskb")
 metadata/_custom_type_script = "uid://d152d6p373a8h"
 
+[node name="Magic" type="Node" parent="StateMachine" unique_id=1810115183]
+script = ExtResource("16_1dmvh")
+metadata/_custom_type_script = "uid://qtpfgjlnsaja"
+
+[node name="MagicAttack" type="Node" parent="StateMachine" unique_id=1399843119]
+script = ExtResource("17_ratp2")
+metadata/_custom_type_script = "uid://bi1n0sarwbqwq"
+
 [connection signal="damage_taken" from="." to="StateMachine/Damage" method="_on_player_damage_taken"]
 [connection signal="damage_taken" from="." to="StateMachine/Death" method="_on_player_damage_taken"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/CrouchAttack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/StairAttack" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/MagicAttack" method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Whip" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="StairCollider" to="." method="_on_stair_collider_body_entered"]
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Walk" method="_on_stair_collider_area_entered"]

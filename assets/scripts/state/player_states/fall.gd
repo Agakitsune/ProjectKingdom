@@ -10,8 +10,10 @@ func _on_exit(next: StringName):
 
 func _on_input(event: InputEvent):
 	if event.is_action_pressed("attack"):
-		change_state.emit("Attack")
-	pass
+		if Input.is_action_pressed("up"):
+			change_state.emit("MagicAttack")
+		else:
+			change_state.emit("Attack")
 
 func _on_process(delta: float):
 	if not player.is_on_floor():

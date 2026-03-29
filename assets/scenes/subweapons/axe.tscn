@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://di7k2wxt3umvu"]
+
+[ext_resource type="Script" uid="uid://sj1le5ibtnr8" path="res://assets/scripts/subweapons/axe.gd" id="1_3hn30"]
+[ext_resource type="Texture2D" uid="uid://dtarco8s3tmci" path="res://assets/textures/tmp_axe.png" id="1_6y37w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hn30"]
+size = Vector2(32, 32)
+
+[node name="Axe" type="Node2D" unique_id=1715238593]
+texture_filter = 1
+script = ExtResource("1_3hn30")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=499498009]
+texture = ExtResource("1_6y37w")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=800238829]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1431576017]
+shape = SubResource("RectangleShape2D_3hn30")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -10,7 +10,7 @@ class_name Player
 @onready var whip_shape: CollisionShape2D = %WhipShape
 @onready var state_machine: StateMachine = $StateMachine
 
-const SPEED = 150.0
+const SPEED = 120.0
 const JUMP_VELOCITY = -300.0
 
 var actual_zone: Zone
@@ -22,11 +22,15 @@ var _stair: Stair
 var _health := health
 var _invicible := false
 
+var _spell: Spell
+
 signal damage_taken(direction: int)
 signal dead()
 
 func _ready() -> void:
 	_lives = lives
+	
+	_spell = preload("uid://lj87mmhoh7q3")
 
 func reset(hard := false):
 	if hard:
@@ -48,6 +52,15 @@ func damage(x: int, direction: int):
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
 
+func cast():
+	if _spell:
+		var instance: Node2D = _spell.scene.instantiate()
+		
+		instance.flip = sprite_2d.flip_h
+		
+		get_parent().add_child(instance)
+		
+		instance.global_position = global_position
 
 func _set_offset(x: float):
 	if sprite_2d.flip_h:
@@ -70,7 +83,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_stair_collider_body_entered(body: Node2D) -> void:
-	print("fdp")
 	_stair = body.get_parent() as Stair
 
 

@@ -21,7 +21,7 @@ func _on_input(event: InputEvent):
 		if machine.test_state("Stair", true):
 			change_state.emit("Stair")
 		else:
-			pass # TODO: Arm for special attack
+			change_state.emit("Magic")
 	
 
 func _on_process(delta: float):

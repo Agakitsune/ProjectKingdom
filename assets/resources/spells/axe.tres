@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Spell" format=3 uid="uid://lj87mmhoh7q3"]
+
+[ext_resource type="PackedScene" uid="uid://di7k2wxt3umvu" path="res://assets/scenes/subweapons/axe.tscn" id="1_jb3ei"]
+[ext_resource type="Script" uid="uid://8d3mb32wxj6c" path="res://assets/scripts/resources/spell.gd" id="1_lhvak"]
+
+[resource]
+script = ExtResource("1_lhvak")
+scene = ExtResource("1_jb3ei")
+metadata/_custom_type_script = "uid://8d3mb32wxj6c"
