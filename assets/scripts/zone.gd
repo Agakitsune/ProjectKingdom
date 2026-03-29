@@ -2,6 +2,8 @@
 extends Marker2D
 class_name Zone
 
+const ARTEFACT := preload("uid://2a7uiidb7g4m")
+
 @export_range(640, 1000, 1.0, "or_greater") var width := 640.0:
 	set = _set_width
 @export_range(360, 1000, 1.0, "or_greater") var height := 360.0:
@@ -12,14 +14,22 @@ class_name Zone
 @export var shrink_right := 0.0:
 	set = _set_right
 
+@export_category("Boss Room")
+@export var bossroom := false
+@export var respawn: Marker2D = null
+
 @onready var collision_shape_2d: CollisionShape2D = $Zone/CollisionShape2D
 
 var _zone: Rect2
 var _doors: Array[Door]
 var _spawners: Array[EnemySpawner]
 var _respawn: Array[Marker2D]
+var _boss: Boosdoor
 
 var _active_respawn: Marker2D
+
+signal boss_triggered(b: Node2D)
+signal boss_summoned()
 
 func _ready() -> void:
 	_zone.size = Vector2(width, height)
@@ -30,10 +40,16 @@ func _ready() -> void:
 			_spawners.push_back(c)
 		elif c is Door:
 			_doors.push_back(c)
+		elif c is Boosdoor:
+			_boss = c
+			_boss.closed.connect(_on_bossdoor_closed)
 		elif c is Marker2D:
 			_respawn.push_back(c)
 	
-	_active_respawn = _respawn[0]
+	if bossroom:
+		_active_respawn = respawn
+	else:
+		_active_respawn = _respawn[0]
 	
 	_update_shape()
 
@@ -75,13 +91,23 @@ func _draw() -> void:
 	
 	draw_string(font, r.position - Vector2(0, 4), self.name, 0, -1, 16, Color.YELLOW)
 	
-	for res in _respawn:
-		var s := to_local(res.global_position)
-		var rr: Rect2
-		rr.position = s - Vector2(16, 64)
-		rr.end = s + Vector2(16, 0)
-		draw_rect(rr, Color.DARK_ORANGE, false)
-		draw_string(font, rr.position - Vector2(0, 4), "Respawn " + self.name, 0, -1, 8)
+	if bossroom:
+		if respawn:
+			draw_dashed_line(
+				Vector2.ZERO,
+				to_local(respawn.global_position),
+				Color.DARK_GOLDENROD,
+				2.0,
+				15.0
+			)
+	else:
+		for res in _respawn:
+			var s := to_local(res.global_position)
+			var rr: Rect2
+			rr.position = s - Vector2(16, 64)
+			rr.end = s + Vector2(16, 0)
+			draw_rect(rr, Color.DARK_ORANGE, false)
+			draw_string(font, rr.position - Vector2(0, 4), "Respawn " + self.name, 0, -1, 8)
 	
 	for s in _spawners:
 		var local := to_local(s.global_position)
@@ -179,6 +205,26 @@ func setup_limit(c: Camera2D):
 	c.limit_top = _zone.position.y
 	c.limit_right = _zone.end.x
 	c.limit_bottom = _zone.end.y
+
+
+func _on_bossdoor_closed():
+	if not bossroom:
+		return
+	
+	var boss := _spawners[0].get_child(0)
+	boss.defeated.connect(_on_boss_defeated)
+	#boss.summoned.connect(_on_boss_summoned)
+	
+	#get_tree().paused = true
+	
+	boss_triggered.emit(boss)
+
+
+func _on_boss_defeated():
+	var artefact := ARTEFACT.instantiate()
+	
+	add_child(artefact)
+	artefact.position.y = -64
 
 
 func _set_width(x: float):

@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://2a7uiidb7g4m"]
+
+[ext_resource type="Script" uid="uid://bgc26eowtvede" path="res://assets/scripts/artefact.gd" id="1_lk16r"]
+[ext_resource type="Texture2D" uid="uid://c727c7y70oewl" path="res://assets/textures/tmp_artefact.png" id="2_br73r"]
+[ext_resource type="Texture2D" uid="uid://dwafhoew0qpy7" path="res://assets/textures/base_particle.png" id="3_10vi6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_br73r"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10vi6"]
+size = Vector2(16, 16)
+
+[sub_resource type="Curve" id="Curve_ykxf7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.05), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="CurveTexture" id="CurveTexture_r7lki"]
+curve = SubResource("Curve_ykxf7")
+
+[sub_resource type="Gradient" id="Gradient_0atqj"]
+offsets = PackedFloat32Array(0.41558442, 1)
+colors = PackedColorArray(0, 0.627451, 0.5294118, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h1fv7"]
+gradient = SubResource("Gradient_0atqj")
+
+[sub_resource type="CurveTexture" id="CurveTexture_4b5e4"]
+curve = SubResource("Curve_ykxf7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8d58i"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 48.0
+emission_ring_inner_radius = 32.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -98.0
+radial_accel_max = -98.0
+color = Color(0.87, 0.87, 0.87, 1)
+color_ramp = SubResource("GradientTexture1D_h1fv7")
+alpha_curve = SubResource("CurveTexture_r7lki")
+emission_curve = SubResource("CurveTexture_4b5e4")
+
+[sub_resource type="Animation" id="Animation_10vi6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:amount_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_ykxf7"]
+resource_name = "summon"
+length = 3.0000036
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.0000002),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:amount_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.0000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r7lki"]
+_data = {
+&"RESET": SubResource("Animation_10vi6"),
+&"summon": SubResource("Animation_ykxf7")
+}
+
+[node name="Artefact" type="CharacterBody2D" unique_id=285563051]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_lk16r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1118922169]
+shape = SubResource("RectangleShape2D_br73r")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=564542483]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1776138377]
+shape = SubResource("RectangleShape2D_10vi6")
+debug_color = Color(0.7988954, 0.42226538, 0, 0.41960785)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=433121263]
+amount = 64
+texture = ExtResource("3_10vi6")
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_8d58i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1075826071]
+texture_filter = 1
+texture = ExtResource("2_br73r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385039270]
+libraries/ = SubResource("AnimationLibrary_r7lki")
+autoplay = &"summon"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

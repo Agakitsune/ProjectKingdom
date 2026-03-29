@@ -2,10 +2,14 @@ extends CharacterBody2D
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var player: Player
 @export var damage := 0
+@export var health := -1
 
+signal defeated
+signal summoned
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -22,9 +26,25 @@ func _physics_process(delta: float) -> void:
 
 func copy_from_base(d: CharacterBody2D):
 	damage = d.damage
+	health = d.health
+
+
+func summon():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	animation_player.play("summon")
+	await animation_player.animation_finished
+	summoned.emit()
+	
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func _damage():
+	if health > 0:
+		health -= 1
+		if health == 0:
+			defeated.emit() # Play some animation and shit
+	
 	var mat := gpu_particles_2d.process_material as ParticleProcessMaterial
 	mat.direction.x = 1.0 if sprite_2d.flip_h else -1.0
 	gpu_particles_2d.restart()

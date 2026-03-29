@@ -5,6 +5,7 @@ class_name Stage
 var _current: Zone
 
 signal zone_loaded(next: Zone)
+signal boss_triggered(b: Node2D)
 
 func snapv_into(p: Vector2) -> Vector2:
 	return _current.snapv_into(p)
@@ -20,6 +21,8 @@ func update(player: Player):
 			
 			if next.respawn:
 				next.next_zone._active_respawn = next.respawn
+			elif next.next_zone.bossroom:
+				next.next_zone._active_respawn = next.next_zone.respawn
 			else:
 				next.next_zone._active_respawn = next.next_zone._respawn[0]
 			
@@ -44,14 +47,27 @@ func set_current(z: Zone):
 
 
 func reset_screen(p: Player, c: Camera2D):
-	_current.setup_limit(c)
-	p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
-	
-	p.reset()
-	
-	for s in _current._spawners:
-		s.destroy()
-		s.spawn(p)
+	if _current.bossroom:
+		var next: Zone = _current._active_respawn.get_parent()
+		next.setup_limit(c)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		
+		p.reset()
+		
+		for s in _current._spawners:
+			s.destroy()
+		
+		for s in next._spawners:
+			s.spawn(p)
+	else:
+		_current.setup_limit(c)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		
+		p.reset()
+		
+		for s in _current._spawners:
+			s.destroy()
+			s.spawn(p)
 
 
 func reset(p: Player, c: Camera2D):
@@ -65,3 +81,7 @@ func reset(p: Player, c: Camera2D):
 	for z in get_children():
 		if z is Zone:
 			z.reset()
+
+
+func _on_boss_triggered(b: Node2D) -> void:
+	boss_triggered.emit(b)

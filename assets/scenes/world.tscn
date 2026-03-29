@@ -22,3 +22,4 @@ position = Vector2(0, -32)
 unique_name_in_owner = true
 
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
+[connection signal="stage_cleared" from="Player" to="." method="_on_player_stage_cleared"]
