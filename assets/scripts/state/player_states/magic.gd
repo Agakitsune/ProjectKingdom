@@ -9,7 +9,10 @@ func _on_exit(next: StringName):
 
 func _on_input(event: InputEvent):
 	if event.is_action_pressed("attack"):
-		change_state.emit("MagicAttack")
+		if player.can_cast():
+			change_state.emit("MagicAttack")
+		else:
+			change_state.emit("Attack")
 
 func _on_process(delta: float):
 	var direction := Input.get_axis("left", "right")

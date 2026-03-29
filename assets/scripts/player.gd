@@ -11,7 +11,7 @@ class_name Player
 @onready var state_machine: StateMachine = $StateMachine
 
 const SPEED = 120.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -350.0
 
 var actual_zone: Zone
 
@@ -51,6 +51,11 @@ func damage(x: int, direction: int):
 	else:
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
+
+func can_cast() -> bool:
+	if _spell:
+		return false
+	return false
 
 func cast():
 	if _spell:

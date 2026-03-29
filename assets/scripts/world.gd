@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_zone_loaded(next: Zone):
 	var next_pos := next.snap_into(camera)
-	var time := camera.get_screen_center_position().distance_to(next_pos) / 450.0
+	var time := camera.get_screen_center_position().distance_to(next_pos) / 650.0
 	
 	camera.limit_enabled = false
 	
@@ -48,7 +48,7 @@ func _on_zone_loaded(next: Zone):
 	
 	_camera_tween.tween_property(
 		camera_control, "global_position", next_pos, time
-	).set_trans(Tween.TRANS_LINEAR)
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	_camera_tween.tween_callback(
 		func():
 			next.setup_limit(camera)

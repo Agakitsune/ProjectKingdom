@@ -12,7 +12,7 @@ func _on_input(event: InputEvent):
 	if event.is_action_pressed("jump"):
 		change_state.emit("Jump")
 	elif event.is_action_pressed("attack"):
-		if Input.is_action_pressed("up"):
+		if Input.is_action_pressed("up") and player.can_cast():
 			change_state.emit("MagicAttack")
 		else:
 			change_state.emit("Attack")

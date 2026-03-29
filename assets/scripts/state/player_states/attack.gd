@@ -36,5 +36,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		var direction := Input.get_axis("left", "right")
 		if direction:
 			change_state.emit("Walk")
+		elif Input.is_action_pressed("up"):
+			change_state.emit("Magic")
 		else:
 			change_state.emit("Idle")
