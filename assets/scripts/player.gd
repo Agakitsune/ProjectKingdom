@@ -34,12 +34,21 @@ func _ready() -> void:
 	
 	_spell = preload("uid://lj87mmhoh7q3")
 
+
+func _physics_process(delta: float) -> void:
+	var cam := get_canvas_transform().affine_inverse() * get_viewport_rect()
+	
+	if position.y >= cam.end.y + 128.0:
+		state_machine.load_state("Death")
+
+
 func reset(hard := false):
 	if hard:
 		_lives = lives
 	_health = health
 	
 	state_machine.load_state("Idle")
+
 
 func damage(x: int, direction: int):
 	if _invicible:
@@ -54,6 +63,7 @@ func damage(x: int, direction: int):
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
 		collision_layer = 0
+		_invicible = true
 
 func can_cast() -> bool:
 	if _spell:
@@ -105,4 +115,5 @@ func _on_stair_collider_body_exited(body: Node2D) -> void:
 
 func _on_timer_timeout() -> void:
 	collision_layer = 1
+	_invicible = false
 	(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", false)

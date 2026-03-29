@@ -18,13 +18,7 @@ const MEDUSA := preload("uid://c7ho38asdgsaf")
 var player: Player
 
 func _ready() -> void:
-	if not Engine.is_editor_hint():
-		timer.wait_time = timeout
-		timer.start()
-	
-	(collision_shape_2d.shape as RectangleShape2D).size = Vector2(
-		width, height
-	)
+	_update_shape()
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -97,7 +91,7 @@ func _update_shape():
 	(collision_shape_2d.shape as RectangleShape2D).size = Vector2(width, height)
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
+func _on_area_2d_body_entered(body: Node2D) -> void:
 	timer.wait_time = timeout
 	timer.start()
 

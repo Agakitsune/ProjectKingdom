@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cejn7c1yabaqn" path="res://assets/scenes/enemies/medusa_spawner.tscn" id="7_jqnao"]
 [ext_resource type="PackedScene" uid="uid://vh32jlg0vwko" path="res://assets/scenes/bossdoor.tscn" id="8_fwjji"]
 [ext_resource type="PackedScene" uid="uid://b7h6dcjssbhuo" path="res://assets/scenes/enemies/dummy.tscn" id="8_h6j12"]
-[ext_resource type="Script" uid="uid://c4t31055gkrda" path="res://assets/scripts/enemies/medusa_spawner.gd" id="8_ss3ck"]
+[ext_resource type="PackedScene" uid="uid://bpj4xx68eeumw" path="res://assets/scenes/enemies/skeleton.tscn" id="8_ss3ck"]
 
 [node name="Stage0" type="Node2D" unique_id=1782814269 node_paths=PackedStringArray("start")]
 texture_filter = 1
@@ -82,11 +82,15 @@ next_zone = NodePath("../../Zone4")
 position = Vector2(-64, 0)
 scene = ExtResource("7_jqnao")
 
-[node name="MedusaSpawner" type="Node2D" parent="Zone2/EnemySpawner" unique_id=410543599 instance=ExtResource("7_jqnao")]
-script = ExtResource("8_ss3ck")
+[node name="MedusaSpawner" parent="Zone2/EnemySpawner" unique_id=410543599 instance=ExtResource("7_jqnao")]
 width = 1152.0
 height = 360.0
-timeout = 0.0
+
+[node name="EnemySpawner2" parent="Zone2" unique_id=438342309 instance=ExtResource("7_75l5r")]
+position = Vector2(-240, 84)
+scene = ExtResource("8_ss3ck")
+
+[node name="Skeleton" parent="Zone2/EnemySpawner2" unique_id=1189474586 instance=ExtResource("8_ss3ck")]
 
 [node name="Zone3" parent="." unique_id=720914504 instance=ExtResource("5_6500g")]
 position = Vector2(768, 212)
