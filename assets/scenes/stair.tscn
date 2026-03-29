@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bt66bcukq3lg1"]
+
+[ext_resource type="Script" uid="uid://j110p80yngmj" path="res://assets/scripts/stair.gd" id="1_ovcgr"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ovcgr"]
+resource_local_to_scene = true
+b = Vector2(3.2, -3.2)
+
+[sub_resource type="Curve2D" id="Curve2D_ovcgr"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 2
+
+[node name="Stair" type="Marker2D" unique_id=877318180]
+script = ExtResource("1_ovcgr")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2002550575]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1362780316]
+shape = SubResource("SegmentShape2D_ovcgr")
+
+[node name="Path2D" type="Path2D" parent="." unique_id=829031088]
+curve = SubResource("Curve2D_ovcgr")
