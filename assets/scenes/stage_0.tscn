@@ -9,7 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cejn7c1yabaqn" path="res://assets/scenes/enemies/medusa_spawner.tscn" id="7_jqnao"]
 [ext_resource type="PackedScene" uid="uid://vh32jlg0vwko" path="res://assets/scenes/bossdoor.tscn" id="8_fwjji"]
 [ext_resource type="PackedScene" uid="uid://b7h6dcjssbhuo" path="res://assets/scenes/enemies/dummy.tscn" id="8_h6j12"]
-[ext_resource type="PackedScene" uid="uid://bpj4xx68eeumw" path="res://assets/scenes/enemies/skeleton.tscn" id="8_ss3ck"]
+[ext_resource type="PackedScene" uid="uid://cddud5plwqgw4" path="res://assets/scenes/enemies/axe_armor.tscn" id="8_ss3ck"]
+[ext_resource type="Script" uid="uid://dvaklm4yucuh4" path="res://assets/scripts/enemies/axe_armor.gd" id="9_6500g"]
 
 [node name="Stage0" type="Node2D" unique_id=1782814269 node_paths=PackedStringArray("start")]
 texture_filter = 1
@@ -90,7 +91,12 @@ height = 360.0
 position = Vector2(-240, 84)
 scene = ExtResource("8_ss3ck")
 
-[node name="Skeleton" parent="Zone2/EnemySpawner2" unique_id=1189474586 instance=ExtResource("8_ss3ck")]
+[node name="AxeArmor" type="CharacterBody2D" parent="Zone2/EnemySpawner2" unique_id=1696521833 instance=ExtResource("8_ss3ck")]
+position = Vector2(0.033325195, 0)
+collision_layer = 4
+collision_mask = 2
+velocity = Vector2(2, 0)
+script = ExtResource("9_6500g")
 
 [node name="Zone3" parent="." unique_id=720914504 instance=ExtResource("5_6500g")]
 position = Vector2(768, 212)

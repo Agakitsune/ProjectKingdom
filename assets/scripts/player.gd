@@ -105,6 +105,10 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	body._damage()
 
 
+func _on_whip_area_entered(area: Area2D) -> void:
+	area._damage()
+
+
 func _on_stair_collider_body_entered(body: Node2D) -> void:
 	_stair = body.get_parent() as Stair
 

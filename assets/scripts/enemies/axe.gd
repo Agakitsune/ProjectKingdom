@@ -3,36 +3,42 @@ extends Area2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
 var flip := false
-var force := 0.0
 var velocity: Vector2
 
-var _grav: Vector2
+var _marked := false
+
+signal destroyed
 
 func _ready() -> void:
-	velocity.x = -force if flip else force
-	velocity.y = -500
+	velocity.x = 200 if flip else -200
 	
-	_grav = ProjectSettings.get_setting("physics/2d/default_gravity_vector")
-	_grav *= ProjectSettings.get_setting("physics/2d/default_gravity")
+	sprite_2d.flip_h = flip
 
 
 func _physics_process(delta: float) -> void:
 	if flip:
-		sprite_2d.rotate(delta * -32.0)
+		sprite_2d.rotate(delta * 16.0)
 	else:
-		sprite_2d.rotate(delta * 32.0)
+		sprite_2d.rotate(delta * -16.0)
 	
-	velocity += _grav * delta
+	velocity.x += (-100 if flip else 100) * delta
 	
 	position += velocity * delta
 	
 	var cam := get_canvas_transform().affine_inverse() * get_viewport_rect()
 	
-	if position.y >= cam.end.y + 32.0:
-		queue_free()
+	if flip:
+		if global_position.x >= (cam.end.x + 32.0):
+			destroyed.emit()
+			queue_free()
+	else:
+		if global_position.x <= (cam.position.x - 32.0):
+			destroyed.emit()
+			queue_free()
 
 
 func _damage():
+	destroyed.emit()
 	queue_free()
 
 

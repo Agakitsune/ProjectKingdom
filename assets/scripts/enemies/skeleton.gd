@@ -43,6 +43,12 @@ func _damage():
 	queue_free()
 
 
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	var n := global_position.direction_to(body.global_position)
+	
+	body.damage(4, -1 if n.x < 0 else 1)
+
+
 func _on_cooldown_timeout() -> void:
 	_shoot = true
 
