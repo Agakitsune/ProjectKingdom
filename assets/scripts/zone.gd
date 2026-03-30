@@ -4,9 +4,9 @@ class_name Zone
 
 const ARTEFACT := preload("uid://2a7uiidb7g4m")
 
-@export_range(640, 1000, 1.0, "or_greater") var width := 640.0:
+@export_range(240, 1000, 1.0, "or_greater") var width := 240.0:
 	set = _set_width
-@export_range(360, 1000, 1.0, "or_greater") var height := 360.0:
+@export_range(135, 1000, 1.0, "or_greater") var height := 135.0:
 	set = _set_height
 
 @export var shrink_left := 0.0:
@@ -43,6 +43,8 @@ func _ready() -> void:
 		elif c is Boosdoor:
 			_boss = c
 			_boss.closed.connect(_on_bossdoor_closed)
+		elif c is Stair:
+			continue
 		elif c is Marker2D:
 			_respawn.push_back(c)
 	
@@ -104,8 +106,8 @@ func _draw() -> void:
 		for res in _respawn:
 			var s := to_local(res.global_position)
 			var rr: Rect2
-			rr.position = s - Vector2(16, 64)
-			rr.end = s + Vector2(16, 0)
+			rr.position = s - Vector2(8, 32)
+			rr.end = s + Vector2(8, 0)
 			draw_rect(rr, Color.DARK_ORANGE, false)
 			draw_string(font, rr.position - Vector2(0, 4), "Respawn " + self.name, 0, -1, 8)
 	

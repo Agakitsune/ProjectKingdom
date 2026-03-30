@@ -5,10 +5,15 @@ var _direction: int
 var _floored := false
 
 func _on_enter(previous: StringName):
-	player.animation_player.play("hurt")
-	player.velocity.y = -300
-	player.velocity.x = _direction * 100
-	_floored = false
+	if previous == "Stair":
+		pass # 
+	if _direction:
+		player.animation_player.play("big_hurt")
+		player.velocity.y = -300
+		player.velocity.x = _direction * 100
+		_floored = false
+	else:
+		player.animation_player.play("small_hurt")
 
 func _on_exit(next: StringName):
 	pass
@@ -23,7 +28,9 @@ func _on_process(delta: float):
 	if player.is_on_floor() and not _floored:
 		_floored = true
 		player.velocity.x = 0.0
-		get_tree().create_timer(0.5, true, true).timeout.connect(_on_timeout)
+		player.animation_player.play("big_hurt_recovery")
+		await player.animation_player.animation_finished
+		_on_timeout()
 
 func _on_timeout():
 	player.timer.start()
@@ -38,4 +45,3 @@ func _on_timeout():
 
 func _on_player_damage_taken(direction: int) -> void:
 	_direction = direction
-	pass # Replace with function body.
