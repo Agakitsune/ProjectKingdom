@@ -26,6 +26,9 @@ func _on_process(delta: float):
 		get_tree().create_timer(0.5, true, true).timeout.connect(_on_timeout)
 
 func _on_timeout():
+	player.timer.start()
+	(player.sprite_2d.material as ShaderMaterial).set_shader_parameter("active", true)
+	
 	var direction := Input.get_axis("left", "right")
 	if direction:
 		change_state.emit("Walk")

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dco1meqn7q4n7"]
+
+[ext_resource type="Script" uid="uid://dggk4yj70elsj" path="res://assets/scripts/enemies/gear_spawner.gd" id="1_a8m5p"]
+
+[node name="GearSpawner" type="Marker2D" unique_id=1367618323]
+script = ExtResource("1_a8m5p")

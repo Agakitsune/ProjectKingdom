@@ -23,13 +23,14 @@ func spawn(p: Player):
 	destroy()
 	
 	_instance = scene.instantiate()
+	
+	if _instance.has_method("copy_from_base"):
+		_instance.copy_from_base(_base)
+	
 	add_child(_instance)
 	
 	if "player" in _instance:
 		_instance.player = p
-	
-	if _instance.has_method("copy_from_base"):
-		_instance.copy_from_base(_base)
 
 
 func destroy():

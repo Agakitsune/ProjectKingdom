@@ -23,7 +23,7 @@ shader = ExtResource("1_14505")
 shader_parameter/active = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rwm0n"]
-size = Vector2(32, 60)
+size = Vector2(32, 32)
 
 [sub_resource type="Animation" id="Animation_0gfpk"]
 length = 0.001
@@ -266,6 +266,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Rect2(128, 64, 64, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_s027a"]
@@ -520,7 +532,7 @@ region_enabled = true
 region_rect = Rect2(16, 64, 128, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543934188]
-position = Vector2(0, 2)
+position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_rwm0n")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=803532606]
@@ -605,14 +617,19 @@ metadata/_custom_type_script = "uid://qtpfgjlnsaja"
 script = ExtResource("17_ratp2")
 metadata/_custom_type_script = "uid://bi1n0sarwbqwq"
 
+[node name="Timer" type="Timer" parent="." unique_id=1783592518]
+wait_time = 2.0
+
 [connection signal="damage_taken" from="." to="StateMachine/Damage" method="_on_player_damage_taken"]
 [connection signal="damage_taken" from="." to="StateMachine/Death" method="_on_player_damage_taken"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/CrouchAttack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/StairAttack" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/MagicAttack" method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="Whip" to="." method="_on_whip_area_entered"]
 [connection signal="body_entered" from="Whip" to="." method="_on_area_2d_body_entered"]
 [connection signal="area_entered" from="StairCollider" to="." method="_on_stair_collider_body_entered"]
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Walk" method="_on_stair_collider_area_entered"]
 [connection signal="area_entered" from="StairCollider" to="StateMachine/Fall" method="_on_stair_collider_area_entered"]
 [connection signal="area_exited" from="StairCollider" to="." method="_on_stair_collider_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -132,5 +132,4 @@ func _on_player_dead() -> void:
 
 
 func _on_player_stage_cleared() -> void:
-	# Handle Stage logic here
 	pass

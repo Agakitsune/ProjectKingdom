@@ -9,6 +9,7 @@ class_name Player
 @onready var whip: Area2D = %Whip
 @onready var whip_shape: CollisionShape2D = %WhipShape
 @onready var state_machine: StateMachine = $StateMachine
+@onready var timer: Timer = $Timer
 
 const SPEED = 120.0
 const JUMP_VELOCITY = -350.0
@@ -33,12 +34,21 @@ func _ready() -> void:
 	
 	_spell = preload("uid://lj87mmhoh7q3")
 
+
+func _physics_process(delta: float) -> void:
+	var cam := get_canvas_transform().affine_inverse() * get_viewport_rect()
+	
+	if position.y >= cam.end.y + 128.0:
+		state_machine.load_state("Death")
+
+
 func reset(hard := false):
 	if hard:
 		_lives = lives
 	_health = health
 	
 	state_machine.load_state("Idle")
+
 
 func damage(x: int, direction: int):
 	if _invicible:
@@ -52,6 +62,8 @@ func damage(x: int, direction: int):
 	else:
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
+		collision_layer = 0
+		_invicible = true
 
 func can_cast() -> bool:
 	if _spell:
@@ -90,7 +102,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage()
+	body._damage(2.0)
+
+
+func _on_whip_area_entered(area: Area2D) -> void:
+	area._damage()
 
 
 func _on_stair_collider_body_entered(body: Node2D) -> void:
@@ -99,3 +115,9 @@ func _on_stair_collider_body_entered(body: Node2D) -> void:
 
 func _on_stair_collider_body_exited(body: Node2D) -> void:
 	_stair = null
+
+
+func _on_timer_timeout() -> void:
+	collision_layer = 1
+	_invicible = false
+	(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", false)
