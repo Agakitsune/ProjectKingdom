@@ -11,8 +11,8 @@ var velocity: Vector2
 var _grav: Vector2
 
 func _ready() -> void:
-	velocity.x = -180 if flip else 180
-	velocity.y = -500
+	velocity.x = -90 if flip else 90
+	velocity.y = -250
 	
 	sprite_2d.flip_h = flip
 	

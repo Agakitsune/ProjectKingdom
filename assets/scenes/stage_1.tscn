@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://v6tihtp361ke" path="res://assets/resources/courtyard.res" id="2_qho3q"]
 [ext_resource type="PackedScene" uid="uid://wcd837llsoas" path="res://assets/scenes/zone.tscn" id="3_in41q"]
 [ext_resource type="PackedScene" uid="uid://bt66bcukq3lg1" path="res://assets/scenes/stair.tscn" id="4_b7plh"]
+[ext_resource type="PackedScene" uid="uid://bynd4eprlcim6" path="res://assets/scenes/candle.tscn" id="5_o3l0w"]
 
 [node name="Stage1" type="Node2D" unique_id=1365291931 node_paths=PackedStringArray("start")]
 texture_filter = 1
@@ -32,3 +33,6 @@ position = Vector2(-384, 124)
 z_index = 5
 position = Vector2(-352, 124)
 length = 13
+
+[node name="Candle" parent="." unique_id=387429283 instance=ExtResource("5_o3l0w")]
+position = Vector2(230, -21)

@@ -8,9 +8,11 @@ size = Vector2(32, 32)
 
 [node name="Axe" type="Node2D" unique_id=1715238593]
 texture_filter = 1
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_3hn30")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=499498009]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_6y37w")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=800238829]

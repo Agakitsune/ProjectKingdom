@@ -13,22 +13,23 @@ script = ExtResource("1_6pxpm")
 
 [node name="HealthContainer" type="HBoxContainer" parent="." unique_id=945091463]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 23.0
-offset_right = 223.0
-offset_bottom = 58.0
-scale = Vector2(0.5, 0.5)
+offset_left = 7.0000005
+offset_top = 7.000001
+offset_right = 215.0
+offset_bottom = 42.0
+scale = Vector2(0.4, 0.4)
 
 [node name="Panel" type="Panel" parent="." unique_id=1283928278]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -19.0
-offset_top = 21.0
-offset_right = 21.0
-offset_bottom = 61.0
+offset_left = 68.0
+offset_top = 8.0
+offset_right = 108.0
+offset_bottom = 48.0
 grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
 
 [node name="Sprite2D" type="Sprite2D" parent="Panel" unique_id=1090474614]
 position = Vector2(19, 19)

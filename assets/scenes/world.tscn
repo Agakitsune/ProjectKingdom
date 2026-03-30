@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://cq0ww67k4pklp" path="res://assets/scenes/stage_1.tscn" id="2_0moxn"]
 [ext_resource type="PackedScene" uid="uid://chko5hpruymly" path="res://assets/scenes/player_ui.tscn" id="3_0moxn"]
 [ext_resource type="PackedScene" uid="uid://r42ai604nfm8" path="res://assets/scenes/interfaces/debug.tscn" id="4_0moxn"]
-[ext_resource type="PackedScene" uid="uid://bynd4eprlcim6" path="res://assets/scenes/candle.tscn" id="6_bd1kc"]
 
 [node name="World" type="Node2D" unique_id=1782814269]
 texture_filter = 1
@@ -23,8 +22,6 @@ visible = false
 process_mode = 1
 z_index = 1
 position = Vector2(0, -32)
-health = 20
-lives = 2
 
 [node name="CameraControl" type="Marker2D" parent="." unique_id=432179344]
 unique_name_in_owner = true
@@ -37,10 +34,6 @@ visible = false
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=243053246]
 process_mode = 3
-visible = false
-
-[node name="Candle" parent="." unique_id=387429283 instance=ExtResource("6_bd1kc")]
-position = Vector2(-201, -34)
 
 [connection signal="teleport" from="CanvasLayer/Debug" to="." method="_on_debug_teleport"]
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
