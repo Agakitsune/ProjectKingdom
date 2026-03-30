@@ -3,17 +3,25 @@
 [ext_resource type="PackedScene" uid="uid://cmqvmp10c0c7c" path="res://assets/scenes/player.tscn" id="1_betll"]
 [ext_resource type="Script" uid="uid://dc0frc302lk8f" path="res://assets/scripts/world.gd" id="1_gc7y0"]
 [ext_resource type="PackedScene" uid="uid://b0ane64w0b8dg" path="res://assets/scenes/stage_0.tscn" id="2_gc7y0"]
+[ext_resource type="PackedScene" uid="uid://chko5hpruymly" path="res://assets/scenes/player_ui.tscn" id="3_0moxn"]
 [ext_resource type="PackedScene" uid="uid://r42ai604nfm8" path="res://assets/scenes/interfaces/debug.tscn" id="4_0moxn"]
+
 
 [node name="World" type="Node2D" unique_id=1782814269]
 texture_filter = 1
 script = ExtResource("1_gc7y0")
 stage = ExtResource("2_gc7y0")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1611659076]
+
+[node name="PlayerUi" parent="CanvasLayer" unique_id=76737324 instance=ExtResource("3_0moxn")]
+
 [node name="Player" parent="." unique_id=1300672341 instance=ExtResource("1_betll")]
 process_mode = 1
 z_index = 1
 position = Vector2(0, -32)
+health = 20
+lives = 2
 
 [node name="CameraControl" type="Marker2D" parent="." unique_id=432179344]
 unique_name_in_owner = true
