@@ -213,9 +213,6 @@ func _on_bossdoor_closed():
 	
 	var boss := _spawners[0].get_child(0)
 	boss.defeated.connect(_on_boss_defeated)
-	#boss.summoned.connect(_on_boss_summoned)
-	
-	#get_tree().paused = true
 	
 	boss_triggered.emit(boss)
 
@@ -223,7 +220,7 @@ func _on_bossdoor_closed():
 func _on_boss_defeated():
 	var artefact := ARTEFACT.instantiate()
 	
-	add_child(artefact)
+	add_child.call_deferred(artefact)
 	artefact.position.y = -64
 
 
@@ -268,3 +265,7 @@ func _update_shape():
 	
 	collision_shape_2d.position = r.get_center()
 	(collision_shape_2d.shape as RectangleShape2D).size = r.size
+
+
+func _on_iron_golem_earthquaked() -> void:
+	_spawners[1]._instance.random_fall() # Very hacky but don't care :)

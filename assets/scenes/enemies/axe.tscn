@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cj8joxyajkynw"]
+
+[ext_resource type="Script" uid="uid://n0jqymr2lapw" path="res://assets/scripts/enemies/axe.gd" id="1_dl7na"]
+[ext_resource type="Texture2D" uid="uid://c8frtac5akf2" path="res://assets/textures/tmp_axem.png" id="2_xipis"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgws0"]
+size = Vector2(16, 16)
+
+[node name="Axe" type="Area2D" unique_id=1260251188]
+collision_layer = 132
+script = ExtResource("1_dl7na")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1811661507]
+texture_filter = 1
+texture = ExtResource("2_xipis")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1693235449]
+shape = SubResource("RectangleShape2D_dgws0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

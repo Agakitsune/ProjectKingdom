@@ -46,6 +46,14 @@ func set_current(z: Zone):
 	_current = z
 
 
+func force_load(z: Zone, a: Marker2D):
+	if not a in z._respawn:
+		return
+	
+	_current = z
+	_current._active_respawn = a
+
+
 func reset_screen(p: Player, c: Camera2D):
 	if _current.bossroom:
 		var next: Zone = _current._active_respawn.get_parent()

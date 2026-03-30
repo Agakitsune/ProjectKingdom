@@ -39,9 +39,9 @@ func summon():
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 
-func _damage():
+func _damage(x: float):
 	if health > 0:
-		health -= 1
+		health -= x
 		if health == 0:
 			defeated.emit() # Play some animation and shit
 	
