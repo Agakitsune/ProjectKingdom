@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var flip := false
+@export var texture := "res://icon.svg"
+@export var spell_name := "axe"
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
@@ -27,7 +29,6 @@ func _physics_process(delta: float) -> void:
 	velocity += _grav * delta
 	
 	position += velocity * delta
-
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	body._damage()

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://5uvojca7y30d"]
+
+[ext_resource type="Script" uid="uid://dih5cpj2vmqnl" path="res://assets/scripts/subweapons/cross.gd" id="1_6akmi"]
+[ext_resource type="Texture2D" uid="uid://u32gc867wyip" path="res://assets/textures/Cross.png" id="2_6akmi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ae0du"]
+size = Vector2(32.5, 32.5)
+
+[node name="Cross" type="Node2D" unique_id=102693377]
+script = ExtResource("1_6akmi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2072145153]
+texture_filter = 1
+position = Vector2(-1.9073486e-06, -1.9073486e-06)
+texture = ExtResource("2_6akmi")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1017804057]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=469683192]
+shape = SubResource("RectangleShape2D_ae0du")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

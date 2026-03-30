@@ -10,9 +10,32 @@ class_name Player
 @onready var whip_shape: CollisionShape2D = %WhipShape
 @onready var state_machine: StateMachine = $StateMachine
 
+const CROSS = preload("res://assets/scenes/subweapons/cross.tscn")
+const DAGGER = preload("res://assets/scenes/subweapons/dagger.tscn")
+const POISON_POTION = preload("res://assets/scenes/subweapons/poison_potion.tscn")
 const SPEED = 120.0
 const JUMP_VELOCITY = -350.0
 
+const weapons_list = {
+	"dagger": {
+		"texture": "res://assets/textures/Dagger.png",
+		"id": "uid://hdt3j1bmgc4",
+	},
+	"poison_potion": {
+		"texture": "res://assets/textures/poison_potion.png",
+		"id": "uid://kmhyq2t6ljpr",
+	},
+	"axe": {
+		"texture": "res://assets/textures/tmp_axe.png",
+		"id": "uid://lj87mmhoh7q3",
+	},
+	"cross": {
+		"texture": "res://assets/textures/Cross.png",
+		"id": "uid://dmvs8g87wfdnx",
+	},
+}
+
+var playerUi
 var actual_zone: Zone
 
 var _lives := lives
@@ -29,9 +52,16 @@ signal dead()
 signal stage_cleared()
 
 func _ready() -> void:
+	playerUi = get_parent().get_node("CanvasLayer/PlayerUi")
+	playerUi.player = self
+	playerUi.weapons_list = weapons_list
+	playerUi.set_spell_texture("res://assets/textures/tmp_axe.png")
 	_lives = lives
-	
 	_spell = preload("uid://lj87mmhoh7q3")
+	#playerUi.set_spell_texture(weapons_list[_spell.scene.spell_name].texture)
+
+func _input(event: InputEvent) -> void:
+	pass
 
 func reset(hard := false):
 	if hard:
@@ -63,7 +93,7 @@ func cast():
 		var instance: Node2D = _spell.scene.instantiate()
 		
 		instance.flip = sprite_2d.flip_h
-		
+		print(instance.spell_name)
 		get_parent().add_child(instance)
 		
 		instance.global_position = global_position

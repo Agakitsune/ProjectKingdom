@@ -7,20 +7,23 @@ var lifetime = 0.0
 var collided = false
 var points = []
 var particles = []
-const POISON_PARTICLE = preload("res://assets/scenes/poison_particle.tscn")
+const POISON_PARTICLE = preload("res://assets/scenes/subweapons/poison_particle.tscn")
 
 #@onready var character_body_2d: CharacterBody2D = $CharacterBody2D
 @onready var path_follow_2d: PathFollow2D = $Path2D/PathFollow2D
 @onready var path_2d: Path2D = $Path2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
+@export var flip := false
+@export var spell_name := "poison_potion"
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-func setup(pos, enrientation):
-	sprite_2d.global_position = Vector2(pos.x + 10, pos.y - 20)
-	velocity = Vector2(100 * enrientation,-200)
+	position = Vector2(position.x + 10, position.y - 20)
+	if flip:
+		velocity = Vector2(100 * -1,-200)
+	else:
+		velocity = Vector2(100,-200)
 
 func set_points(pos):
 	points.clear()

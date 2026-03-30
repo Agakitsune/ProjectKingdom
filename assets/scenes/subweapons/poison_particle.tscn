@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gj184lrqoq5"]
 
-[ext_resource type="Texture2D" uid="uid://bgpni8st6x781" path="res://assets/textures/skull.png" id="1_0i6cg"]
+[ext_resource type="Script" uid="uid://d3jmomcnbh2oc" path="res://assets/scripts/subweapons/poison_particle.gd" id="1_khtw1"]
+[ext_resource type="Texture2D" uid="uid://bgpni8st6x781" path="res://assets/textures/skull.png" id="2_vry2d"]
 
 [sub_resource type="Gradient" id="Gradient_lbenq"]
 colors = PackedColorArray(0, 0.29928097, 0, 1, 0, 0.78431374, 0, 0)
@@ -26,11 +27,12 @@ turbulence_noise_speed_random = 1.0
 size = Vector2(20, 2)
 
 [node name="PoisonParticle" type="Node2D" unique_id=1802020787]
+script = ExtResource("1_khtw1")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=130723641]
 position = Vector2(0, 1)
 amount = 3
-texture = ExtResource("1_0i6cg")
+texture = ExtResource("2_vry2d")
 lifetime = 3.0
 randomness = 1.0
 interpolate = false
@@ -39,7 +41,11 @@ process_material = SubResource("ParticleProcessMaterial_lbenq")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2081788104]
 position = Vector2(1, 2)
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=101489660]
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_0i6cg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
