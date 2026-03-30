@@ -4,7 +4,7 @@
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ovcgr"]
 resource_local_to_scene = true
-b = Vector2(3.2, -3.2)
+b = Vector2(1.6, -1.6)
 
 [sub_resource type="Curve2D" id="Curve2D_ovcgr"]
 resource_local_to_scene = true

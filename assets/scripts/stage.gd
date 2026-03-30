@@ -31,7 +31,7 @@ func update(player: Player):
 
 
 func spawn_in(p: Player):
-	p.global_position = start._active_respawn.global_position - Vector2(0, 32)
+	p.global_position = start._active_respawn.global_position - Vector2(0, 16)
 	
 	for s in start._spawners:
 		s.spawn(p)
@@ -58,7 +58,7 @@ func reset_screen(p: Player, c: Camera2D):
 	if _current.bossroom:
 		var next: Zone = _current._active_respawn.get_parent()
 		next.setup_limit(c)
-		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 16)
 		
 		p.reset()
 		
@@ -69,7 +69,7 @@ func reset_screen(p: Player, c: Camera2D):
 			s.spawn(p)
 	else:
 		_current.setup_limit(c)
-		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 16)
 		
 		p.reset()
 		
@@ -80,7 +80,7 @@ func reset_screen(p: Player, c: Camera2D):
 
 func reset(p: Player, c: Camera2D):
 	start.setup_limit(c)
-	p.global_position = start._active_respawn.global_position - Vector2(0, 32)
+	p.global_position = start._active_respawn.global_position - Vector2(0, 16)
 	
 	p.reset(true)
 	

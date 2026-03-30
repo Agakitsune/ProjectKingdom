@@ -2,7 +2,8 @@ extends PlayerState
 class_name PlayerCrouchState
 
 func _on_enter(previous: StringName):
-	player.animation_player.play("crouch")
+	if previous != "CrouchAttack":
+		player.animation_player.play("crouch")
 
 func _on_exit(next: StringName):
 	pass
@@ -20,6 +21,10 @@ func _on_process(delta: float):
 	
 	if not Input.is_action_pressed("down"):
 		if direction:
+			player.animation_player.play_backwards("fast_up")
+			await player.animation_player.animation_finished
 			change_state.emit("Walk")
 		else:
+			player.animation_player.play_backwards("crouch")
+			await player.animation_player.animation_finished
 			change_state.emit("Idle")

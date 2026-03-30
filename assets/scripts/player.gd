@@ -14,8 +14,10 @@ class_name Player
 const CROSS = preload("res://assets/scenes/subweapons/cross.tscn")
 const DAGGER = preload("res://assets/scenes/subweapons/dagger.tscn")
 const POISON_POTION = preload("res://assets/scenes/subweapons/poison_potion.tscn")
-const SPEED = 120.0
-const JUMP_VELOCITY = -350.0
+
+const SPEED := 40.0
+const JUMP_VELOCITY := -300.0
+const AIR_MUL := 2.0
 
 const weapons_list = {
 	"dagger": {
@@ -92,7 +94,6 @@ func damage(x: int, direction: int):
 	else:
 		damage_taken.emit(direction)
 		state_machine.load_state("Damage")
-		collision_layer = 0
 		_invicible = true
 
 func can_cast() -> bool:
@@ -122,13 +123,13 @@ func _set_offset(x: float):
 		sprite_2d.offset.x = x
 
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "attack":
-		animation_player.play("idle")
-		whip_shape.disabled = true
-	elif anim_name == "crouch_attack":
-		animation_player.play("crouch")
-		whip_shape.disabled = true
+#func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	#if anim_name == "attack":
+		#animation_player.play("idle")
+		#whip_shape.disabled = true
+	#elif anim_name == "crouch_attack":
+		#animation_player.play("crouch")
+		#whip_shape.disabled = true
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -136,7 +137,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _on_whip_area_entered(area: Area2D) -> void:
-	area._damage()
+	area._damage(2.0)
 
 
 func _on_stair_collider_body_entered(body: Node2D) -> void:
@@ -148,6 +149,5 @@ func _on_stair_collider_body_exited(body: Node2D) -> void:
 
 
 func _on_timer_timeout() -> void:
-	collision_layer = 1
 	_invicible = false
 	(sprite_2d.material as ShaderMaterial).set_shader_parameter("active", false)
