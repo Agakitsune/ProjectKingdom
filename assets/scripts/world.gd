@@ -30,7 +30,6 @@ func _ready() -> void:
 	
 	debug.set_stage(_stage)
 
-
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return

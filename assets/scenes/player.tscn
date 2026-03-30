@@ -522,8 +522,6 @@ size = Vector2(32, 16)
 [node name="Player" type="CharacterBody2D" unique_id=1300672341]
 collision_mask = 34
 script = ExtResource("1_rwm0n")
-health = null
-lives = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470087265]
 texture_filter = 1
@@ -543,7 +541,7 @@ autoplay = &"idle"
 
 [node name="Whip" type="Area2D" parent="." unique_id=1567318469]
 unique_name_in_owner = true
-collision_layer = 0
+collision_layer = 4096
 collision_mask = 4
 
 [node name="WhipShape" type="CollisionShape2D" parent="Whip" unique_id=1623542061]
