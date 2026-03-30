@@ -15,7 +15,7 @@ position = Vector2(-1.9073486e-06, -1.9073486e-06)
 texture = ExtResource("2_6akmi")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1017804057]
-collision_layer = 0
+collision_layer = 4096
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=469683192]

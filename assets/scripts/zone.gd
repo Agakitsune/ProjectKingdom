@@ -55,7 +55,6 @@ func _ready() -> void:
 	
 	_update_shape()
 
-
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		_spawners = []

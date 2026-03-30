@@ -38,6 +38,8 @@ const weapons_list = {
 	},
 }
 
+var current_spell_id = 2
+
 var playerUi
 var actual_zone: Zone
 
@@ -69,6 +71,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	var cam := get_canvas_transform().affine_inverse() * get_viewport_rect()
+	playerUi.current_health = _health
 	
 	if position.y >= cam.end.y + 128.0:
 		state_machine.load_state("Death")

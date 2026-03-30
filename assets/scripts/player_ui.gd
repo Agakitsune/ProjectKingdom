@@ -4,8 +4,8 @@ extends Control
 @onready var sprite_2d: Sprite2D = $Panel/Sprite2D
 
 var sprite_list = []
-var max_health = 10
-var current_health = 3
+var max_health = 20
+var current_health = 10
 var weapons_list
 var player
 

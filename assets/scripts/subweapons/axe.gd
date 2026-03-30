@@ -36,4 +36,4 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage()
+	body._damage(6)
