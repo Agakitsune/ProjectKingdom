@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Spell" format=3 uid="uid://hdt3j1bmgc4"]
+
+[ext_resource type="Script" uid="uid://8d3mb32wxj6c" path="res://assets/scripts/resources/spell.gd" id="1_ac3g1"]
+[ext_resource type="PackedScene" uid="uid://5ooeqhklt8q" path="res://assets/scenes/subweapons/dagger.tscn" id="1_tcrew"]
+
+[resource]
+script = ExtResource("1_ac3g1")
+scene = ExtResource("1_tcrew")
+metadata/_custom_type_script = "uid://8d3mb32wxj6c"

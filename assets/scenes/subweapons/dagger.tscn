@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://5ooeqhklt8q"]
+
+[ext_resource type="Script" uid="uid://cjw3j8x3f4efi" path="res://assets/scripts/subweapons/dagger.gd" id="1_6yt5i"]
+[ext_resource type="Texture2D" uid="uid://cavclsxlav1e0" path="res://assets/textures/Dagger.png" id="2_6yt5i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qi04"]
+size = Vector2(22, 16)
+
+[node name="Dagger" type="Node2D" unique_id=1844646572]
+script = ExtResource("1_6yt5i")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1070835552]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1082187726]
+shape = SubResource("RectangleShape2D_8qi04")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1174416593]
+texture_filter = 1
+texture = ExtResource("2_6yt5i")
