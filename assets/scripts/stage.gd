@@ -2,6 +2,7 @@ extends Node2D
 class_name Stage
 
 @export var start: Zone
+@export var time: int
 var _current: Zone
 
 signal zone_loaded(next: Zone)

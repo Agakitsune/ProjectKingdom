@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-@export_range(0, 100, 1.0, "or_greater") var health := 20
+@export_range(0, 100, 1.0, "or_greater") var health := 100
 @export_range(0, 9, 1.0) var lives := 2
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -38,10 +38,12 @@ const weapons_list = {
 	},
 }
 
-var playerUi
+#var playerUi
 var actual_zone: Zone
 
 var _lives := lives
+var _score := 0
+var _heart := 0
 
 var _stair: Stair
 
@@ -51,16 +53,23 @@ var _invicible := false
 var _spell: Spell
 
 signal damage_taken(direction: int)
+
+signal update()
+
 signal dead()
 signal stage_cleared()
 
 func _ready() -> void:
-	playerUi = get_parent().get_node("CanvasLayer/PlayerUi")
-	playerUi.player = self
-	playerUi.weapons_list = weapons_list
-	playerUi.set_spell_texture("res://assets/textures/tmp_axe.png")
+	#playerUi = get_parent().get_node("CanvasLayer/PlayerUi")
+	#playerUi.player = self
+	#playerUi.weapons_list = weapons_list
+	#playerUi.set_spell_texture("res://assets/textures/tmp_axe.png")
 	_lives = lives
 	_spell = preload("uid://lj87mmhoh7q3")
+	
+	await get_parent().ready
+	
+	update.emit()
 	#playerUi.set_spell_texture(weapons_list[_spell.scene.spell_name].texture)
 
 func _input(event: InputEvent) -> void:
@@ -87,6 +96,7 @@ func damage(x: int, direction: int):
 		return
 	
 	_health -= x
+	update.emit()
 	
 	if _health <= 0:
 		damage_taken.emit(direction)
@@ -97,16 +107,18 @@ func damage(x: int, direction: int):
 		_invicible = true
 
 func can_cast() -> bool:
-	if _spell:
+	if _spell and _spell.consumption <= _heart:
 		return true
 	return false
 
 func cast():
 	if _spell:
+		_heart -= _spell.consumption
+		update.emit()
+		
 		var instance: Node2D = _spell.scene.instantiate()
 		
 		instance.flip = sprite_2d.flip_h
-		print(instance.spell_name)
 		get_parent().add_child(instance)
 		
 		instance.global_position = global_position
