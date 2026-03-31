@@ -32,9 +32,7 @@ position = Vector2(0, -32)
 unique_name_in_owner = true
 visible = false
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=243053246]
-process_mode = 3
-
 [connection signal="teleport" from="CanvasLayer/Debug" to="." method="_on_debug_teleport"]
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="stage_cleared" from="Player" to="." method="_on_player_stage_cleared"]
+[connection signal="update" from="Player" to="." method="_on_player_update"]

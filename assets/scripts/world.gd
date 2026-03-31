@@ -11,15 +11,22 @@ extends Node2D
 
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var debug: Control = $CanvasLayer/Debug
+@onready var player_ui: Control = $CanvasLayer/PlayerUi
 
 var _camera_tween : Tween
 var _stage: Stage
+
+var _accum := 0.0
+var _time := 0
 
 func _ready() -> void:
 	if _stage:
 		remove_child(_stage)
 	
 	_stage = stage.instantiate()
+	
+	_time = _stage.time
+	player_ui._update_time(_time)
 	
 	add_child(_stage)
 	
@@ -33,6 +40,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+	
+	_accum += delta
+	if _accum >= 1.0:
+		_accum -= 1.0
+		_time -= 1
+		
+		player_ui._update_time(_time)
+		
+		if _time <= 0:
+			player.damage(99999, 0)
 	
 	if not (_camera_tween and _camera_tween.is_running()):
 		camera_control.global_position = player.global_position
@@ -132,3 +149,7 @@ func _on_player_dead() -> void:
 
 func _on_player_stage_cleared() -> void:
 	pass
+
+
+func _on_player_update() -> void:
+	player_ui._update_player(player)
