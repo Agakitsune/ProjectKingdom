@@ -2,10 +2,13 @@ extends Node2D
 class_name Stage
 
 @export var start: Zone
+@export var time: int
 var _current: Zone
 
 signal zone_loaded(next: Zone)
 signal boss_triggered(b: Node2D)
+signal camera_shake(duration: float, amp: float)
+signal floor_damage(x: int)
 
 func snapv_into(p: Vector2) -> Vector2:
 	return _current.snapv_into(p)
@@ -31,7 +34,7 @@ func update(player: Player):
 
 
 func spawn_in(p: Player):
-	p.global_position = start._active_respawn.global_position - Vector2(0, 32)
+	p.global_position = start._active_respawn.global_position - Vector2(0, 16)
 	
 	for s in start._spawners:
 		s.spawn(p)
@@ -58,7 +61,7 @@ func reset_screen(p: Player, c: Camera2D):
 	if _current.bossroom:
 		var next: Zone = _current._active_respawn.get_parent()
 		next.setup_limit(c)
-		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 16)
 		
 		p.reset()
 		
@@ -69,7 +72,7 @@ func reset_screen(p: Player, c: Camera2D):
 			s.spawn(p)
 	else:
 		_current.setup_limit(c)
-		p.global_position = _current._active_respawn.global_position - Vector2(0, 32)
+		p.global_position = _current._active_respawn.global_position - Vector2(0, 16)
 		
 		p.reset()
 		
@@ -80,7 +83,7 @@ func reset_screen(p: Player, c: Camera2D):
 
 func reset(p: Player, c: Camera2D):
 	start.setup_limit(c)
-	p.global_position = start._active_respawn.global_position - Vector2(0, 32)
+	p.global_position = start._active_respawn.global_position - Vector2(0, 16)
 	
 	p.reset(true)
 	
@@ -93,3 +96,11 @@ func reset(p: Player, c: Camera2D):
 
 func _on_boss_triggered(b: Node2D) -> void:
 	boss_triggered.emit(b)
+
+
+func _on_zone_3_camera_shake(duration: float, amp: float) -> void:
+	camera_shake.emit(duration, amp)
+
+
+func _on_zone_3_floor_damage(x: int) -> void:
+	floor_damage.emit(x)

@@ -4,7 +4,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uu5ol"]
 resource_local_to_scene = true
-size = Vector2(640, 360)
+size = Vector2(240, 135)
 
 [node name="Zone" type="Marker2D" unique_id=720914504]
 script = ExtResource("1_uu5ol")

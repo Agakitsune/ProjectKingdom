@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Spell" format=3 uid="uid://dmvs8g87wfdnx"]
+
+[ext_resource type="PackedScene" uid="uid://5uvojca7y30d" path="res://assets/scenes/subweapons/cross.tscn" id="1_okouj"]
+[ext_resource type="Script" uid="uid://8d3mb32wxj6c" path="res://assets/scripts/resources/spell.gd" id="2_dn83n"]
+
+[resource]
+script = ExtResource("2_dn83n")
+consumption = 2
+scene = ExtResource("1_okouj")
+idx = 3
+metadata/_custom_type_script = "uid://8d3mb32wxj6c"

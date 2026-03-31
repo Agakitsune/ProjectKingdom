@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cejn7c1yabaqn"]
+
+[ext_resource type="Script" uid="uid://c4t31055gkrda" path="res://assets/scripts/enemies/medusa_spawner.gd" id="1_d5g75"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5g75"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
+[node name="MedusaSpawner" type="Node2D" unique_id=410543599]
+script = ExtResource("1_d5g75")
+width = 32.0
+height = 32.0
+
+[node name="Timer" type="Timer" parent="." unique_id=259230206]
+wait_time = 2.0
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1121065235]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1031721546]
+shape = SubResource("RectangleShape2D_d5g75")
+debug_color = Color(0.546387, 0.5655601, 7.70092e-07, 0.41960785)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

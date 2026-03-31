@@ -11,9 +11,17 @@ extends Node2D
 
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var debug: Control = $CanvasLayer/Debug
+@onready var player_ui: Control = $CanvasLayer/PlayerUi
 
 var _camera_tween : Tween
 var _stage: Stage
+
+var _accum := 0.0
+var _time := 0
+
+var _shake := 0.0
+
+var _boss: Node2D
 
 func _ready() -> void:
 	if _stage:
@@ -21,23 +29,43 @@ func _ready() -> void:
 	
 	_stage = stage.instantiate()
 	
+	_time = _stage.time
+	player_ui._update_time(_time)
+	
 	add_child(_stage)
 	
 	_stage.spawn_in(player)
 	_stage.zone_loaded.connect(_on_zone_loaded)
 	_stage.boss_triggered.connect(_on_boss_trigger)
+	_stage.camera_shake.connect(_on_camera_shake)
+	_stage.floor_damage.connect(_on_floor)
 	_stage.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	debug.set_stage(_stage)
-
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
+	camera.offset.y = randf_range(-_shake, _shake)
+	
+	_accum += delta
+	if _accum >= 1.0:
+		_accum -= 1.0
+		_time -= 1
+		
+		player_ui._update_time(_time)
+		
+		if _time <= 0:
+			player.damage(99999, 0)
+	
 	if not (_camera_tween and _camera_tween.is_running()):
 		camera_control.global_position = player.global_position
 		camera_control.global_position = _stage.snapv_into(camera_control.global_position)
+		
+		
+	if _boss:
+		player_ui.set_boss_health(_boss.health)
 	
 	set_process_input(true)
 	
@@ -85,6 +113,8 @@ func _on_boss_trigger(b: Node2D):
 	var next_pos := b.global_position
 	var time := camera.get_screen_center_position().distance_to(next_pos) / 650.0
 	
+	_boss = b
+	
 	_camera_tween = create_tween()
 	_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
@@ -97,11 +127,18 @@ func _on_boss_trigger(b: Node2D):
 		func():
 			b.summon()
 	)
+	#health
+	_camera_tween.tween_method(
+		_update_boss,
+		0.0,
+		b.health,
+		2.0
+	).set_trans(Tween.TRANS_LINEAR)
 	
-	await b.summoned
+	#await b.summoned
 	
-	_camera_tween = create_tween()
-	_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	#_camera_tween = create_tween()
+	#_camera_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	
 	_camera_tween.tween_property(
 		camera_control, "global_position", player.global_position, time
@@ -112,6 +149,25 @@ func _on_boss_trigger(b: Node2D):
 	)
 
 
+func _update_boss(x: float):
+	player_ui.set_boss_health(x)
+
+
+func _on_camera_shake(duration: float, amp: float):
+	_shake = amp
+	create_tween().tween_property(
+		self,
+		"_shake",
+		0.0,
+		duration
+	)
+
+
+func _on_floor(x: int):
+	if player.is_on_floor():
+		player.damage(x, 0)
+
+
 func _set_stage(x: PackedScene):
 	stage = x
 	
@@ -119,11 +175,14 @@ func _set_stage(x: PackedScene):
 		remove_child(_stage)
 	if x:
 		_stage = stage.instantiate()
-	
+		
 		add_child(_stage)
 
 
 func _on_player_dead() -> void:
+	if _time <= 0:
+		_time = _stage.time
+	
 	if player._lives > 0:
 		_stage.reset_screen(player, camera)
 		player._lives -= 1
@@ -132,5 +191,8 @@ func _on_player_dead() -> void:
 
 
 func _on_player_stage_cleared() -> void:
-	# Handle Stage logic here
 	pass
+
+
+func _on_player_update() -> void:
+	player_ui._update_player(player)

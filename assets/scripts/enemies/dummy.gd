@@ -3,10 +3,13 @@ extends CharacterBody2D
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var invi: Timer = $In
 
 @export var player: Player
 @export var damage := 0
 @export var health := -1
+
+var _invicible := false
 
 signal defeated
 signal summoned
@@ -39,9 +42,13 @@ func summon():
 	process_mode = Node.PROCESS_MODE_INHERIT
 
 
-func _damage():
+func _damage(x: float, cross := true):
+	if _invicible:
+		return
+	_invicible = true
+	invi.start()
 	if health > 0:
-		health -= 1
+		health -= x
 		if health == 0:
 			defeated.emit() # Play some animation and shit
 	
@@ -55,3 +62,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	
 	if damage > 0:
 		body.damage(damage, -1 if n.x < 0 else 1)
+
+
+func _on_in_timeout() -> void:
+	_invicible = false
+	pass # Replace with function body.

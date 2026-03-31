@@ -2,6 +2,8 @@ extends PlayerState
 class_name PlayerJumpState
 
 func _on_enter(previous: StringName):
+	player.animation_player.play("jump")
+	
 	if previous != "MagicAttack":
 		player.velocity.y = player.JUMP_VELOCITY
 
@@ -25,5 +27,5 @@ func _on_process(delta: float):
 	
 	var direction := signf(Input.get_axis("left", "right"))
 	
-	player.velocity.x = direction * player.SPEED
+	player.velocity.x = direction * player.SPEED * player.AIR_MUL
 	player.move_and_slide()

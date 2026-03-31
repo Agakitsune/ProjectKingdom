@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://5ooeqhklt8q"]
+
+[ext_resource type="Script" uid="uid://cjw3j8x3f4efi" path="res://assets/scripts/subweapons/dagger.gd" id="1_6yt5i"]
+[ext_resource type="Texture2D" uid="uid://c0ef7nqs6uu4e" path="res://assets/textures/subweapon.png" id="2_6yt5i"]
+[ext_resource type="Texture2D" uid="uid://c8iixtfjwl2fp" path="res://assets/textures/spritesheets/flash.png" id="3_cmeh2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8qi04"]
+size = Vector2(16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmeh2"]
+atlas = ExtResource("2_6yt5i")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qi04"]
+atlas = ExtResource("3_cmeh2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xbsh"]
+atlas = ExtResource("3_cmeh2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21e6h"]
+atlas = ExtResource("3_cmeh2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo3a5"]
+atlas = ExtResource("3_cmeh2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8fagg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qi04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xbsh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21e6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo3a5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Dagger" type="Node2D" unique_id=1844646572]
+texture_filter = 1
+script = ExtResource("1_6yt5i")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1070835552]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1082187726]
+shape = SubResource("RectangleShape2D_8qi04")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1174416593]
+texture_filter = 1
+texture = SubResource("AtlasTexture_cmeh2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=935292686]
+visible = false
+sprite_frames = SubResource("SpriteFrames_8fagg")
+frame = 3
+frame_progress = 1.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

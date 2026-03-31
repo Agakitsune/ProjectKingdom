@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://bpj4xx68eeumw"]
+
+[ext_resource type="Script" uid="uid://p4j2b7h0mo5t" path="res://assets/scripts/enemies/skeleton.gd" id="1_eyxlo"]
+[ext_resource type="Texture2D" uid="uid://ctreass3lyet7" path="res://assets/textures/spritesheets/skeleton.png" id="2_eyxlo"]
+[ext_resource type="Texture2D" uid="uid://xpcl7wwsg6ks" path="res://assets/textures/spritesheets/parts.png" id="3_05qki"]
+[ext_resource type="Texture2D" uid="uid://cyk3e1wc8igi5" path="res://assets/textures/spritesheets/flame.png" id="4_nsl2p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyxlo"]
+size = Vector2(16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5t6m"]
+size = Vector2(12, 28)
+
+[sub_resource type="Animation" id="Animation_eyxlo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_05qki"]
+resource_name = "attack"
+length = 0.3750125
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 32, 32, 32), Rect2(32, 32, 32, 32), Rect2(64, 32, 32, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_a5t6m"]
+resource_name = "idle"
+length = 0.500025
+loop_mode = 2
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 0, 32, 32), Rect2(32, 0, 32, 32), Rect2(64, 0, 32, 32)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_05qki"]
+_data = {
+&"RESET": SubResource("Animation_eyxlo"),
+&"attack": SubResource("Animation_05qki"),
+&"idle": SubResource("Animation_a5t6m")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_84hao"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vops8"]
+particle_flag_disable_z = true
+direction = Vector3(1, -2, 0)
+spread = 30.0
+initial_velocity_min = 70.0
+initial_velocity_max = 100.0
+angular_velocity_min = -40.000015
+angular_velocity_max = 39.999985
+gravity = Vector3(0, 98, 0)
+anim_offset_max = 1.0
+collision_mode = 2
+sub_emitter_mode = 1
+sub_emitter_frequency = 8.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_38g7h"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7l3t5"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="Skeleton" type="CharacterBody2D" unique_id=1189474586]
+texture_filter = 1
+collision_layer = 4
+collision_mask = 4098
+script = ExtResource("1_eyxlo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1986357055]
+texture_filter = 1
+texture = ExtResource("2_eyxlo")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=919207553]
+shape = SubResource("RectangleShape2D_eyxlo")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1875523693]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1298953277]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_a5t6m")
+debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[node name="Cooldown" type="Timer" parent="." unique_id=1960078540]
+wait_time = 2.0
+one_shot = true
+
+[node name="Interval" type="Timer" parent="." unique_id=85487719]
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1445100770]
+libraries/ = SubResource("AnimationLibrary_05qki")
+autoplay = &"idle"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=770818715]
+material = SubResource("CanvasItemMaterial_84hao")
+emitting = false
+amount = 5
+sub_emitter = NodePath("../GPUParticles2D2")
+texture = ExtResource("3_05qki")
+lifetime = 5.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_vops8")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=837198379]
+material = SubResource("CanvasItemMaterial_38g7h")
+emitting = false
+amount = 1024
+texture = ExtResource("4_nsl2p")
+process_material = SubResource("ParticleProcessMaterial_7l3t5")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
+[connection signal="timeout" from="Interval" to="." method="_on_interval_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

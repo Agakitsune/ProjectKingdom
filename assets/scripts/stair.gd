@@ -16,13 +16,21 @@ var lock_down := false
 func _ready() -> void:
 	_update_shape()
 
+func _process(delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	for x in range(length + 1):
+		var p := path_2d.curve.sample_baked(x * 11.31)
+		draw_circle(p, 1.0, Color.RED)
+
 func sample(f: float) -> Vector2:
 	return path_2d.curve.sample_baked(f) + global_position
 
 func _get_flip() -> Vector2:
 	return Vector2(
-		-32 if flip_h else 32,
-		-32
+		-8 if flip_h else 8,
+		-8
 	)
 
 func _set_flip_h(f: bool):
@@ -52,7 +60,7 @@ func _update_shape():
 	seg.b = s
 
 func _player_ratio(p: Player) -> float:
-	var flat := length * 32.0
+	var flat := length * 8.0
 	var play := absf(p.global_position.x - global_position.x)
 	var ratio := play / flat
 	
@@ -65,14 +73,14 @@ func _player_use(p: Player, grounded := true) -> int:
 		if ratio <= 0.5:
 			return 0
 		else:
-			return length * 2 - 1
+			return length - 1
 	else:
 		if ratio >= 1.0:
 			return 0
 		if ratio <= 0.0:
 			return 0
 		
-		var len := length * 2
+		var len := length
 		ratio *= len
 		ratio = roundf(ratio)
 		

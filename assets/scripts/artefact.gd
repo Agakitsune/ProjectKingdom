@@ -6,7 +6,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta * delta
 	
@@ -15,7 +14,7 @@ func _physics_process(delta: float) -> void:
 	if collide:
 		velocity.y *= -0.5
 		position += collide.get_travel()
-		if collide.get_travel().length() <= 0.01:
+		if collide.get_travel().length() <= 0.1:
 			set_physics_process(false)
 
 

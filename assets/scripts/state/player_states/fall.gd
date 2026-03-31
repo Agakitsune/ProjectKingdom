@@ -2,8 +2,8 @@ extends PlayerState
 class_name PlayerFallState
 
 func _on_enter(previous: StringName):
-	pass
-	#player.animation_player.play("fall")
+	player.animation_player.play("fall")
+
 
 func _on_exit(next: StringName):
 	pass
@@ -21,7 +21,7 @@ func _on_process(delta: float):
 	
 	var direction := signf(Input.get_axis("left", "right"))
 	
-	player.velocity.x = direction * player.SPEED
+	player.velocity.x = direction * player.SPEED * player.AIR_MUL
 	player.move_and_slide()
 	
 	if player.is_on_floor():

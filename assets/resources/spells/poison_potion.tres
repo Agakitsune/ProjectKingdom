@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Spell" format=3 uid="uid://kmhyq2t6ljpr"]
+
+[ext_resource type="Script" uid="uid://8d3mb32wxj6c" path="res://assets/scripts/resources/spell.gd" id="1_asc4y"]
+[ext_resource type="PackedScene" uid="uid://dgr2pjr3j05qd" path="res://assets/scenes/subweapons/poison_potion.tscn" id="1_sauwv"]
+
+[resource]
+script = ExtResource("1_asc4y")
+consumption = 3
+scene = ExtResource("1_sauwv")
+idx = 2
+metadata/_custom_type_script = "uid://8d3mb32wxj6c"

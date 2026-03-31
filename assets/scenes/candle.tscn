@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bynd4eprlcim6"]
+
+[ext_resource type="Script" uid="uid://cqqubdtswpgrj" path="res://assets/scripts/candle.gd" id="1_s0qkj"]
+[ext_resource type="SpriteFrames" uid="uid://bmf77ceoo5vff" path="res://assets/resources/frames/big_candle.tres" id="2_s0qkj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0qkj"]
+size = Vector2(16, 16)
+
+[node name="Candle" type="Area2D" unique_id=419645276]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_s0qkj")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2110089574]
+texture_filter = 1
+sprite_frames = ExtResource("2_s0qkj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1972364497]
+shape = SubResource("RectangleShape2D_s0qkj")

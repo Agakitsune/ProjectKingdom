@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c5wrvqjwlejqw"]
+
+[ext_resource type="Script" uid="uid://cji8261ll0yql" path="res://assets/scripts/droped_spell.gd" id="1_isn4u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_isn4u"]
+size = Vector2(32.000008, 32.00001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2jgm"]
+size = Vector2(16, 16)
+
+[node name="Item" type="CharacterBody2D" unique_id=94358733]
+texture_filter = 1
+script = ExtResource("1_isn4u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1810221315]
+
+[node name="Area2D2" type="Area2D" parent="Sprite2D" unique_id=542300855]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D2" unique_id=672720870]
+position = Vector2(0, -7.6293945e-06)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_isn4u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230894529]
+shape = SubResource("RectangleShape2D_u2jgm")
+
+[connection signal="body_entered" from="Sprite2D/Area2D2" to="." method="_on_area_2d_2_body_entered"]

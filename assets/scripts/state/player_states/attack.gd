@@ -5,14 +5,20 @@ var _active := false
 
 func _on_enter(previous: StringName):
 	_active = true
-	player.animation_player.play("attack")
-	player.whip.scale.x = -1.0 if player.sprite_2d.flip_h else 1.0
-	player.sprite_2d.offset.x = -32.0 if player.sprite_2d.flip_h else 32.0
-	player.whip_shape.disabled = false
+	
+	if not player.is_on_floor():
+		if player.sprite_2d.flip_h:
+			player.animation_player.play("jump_attack_l")
+		else:
+			player.animation_player.play("jump_attack_r")
+	else:
+		if player.sprite_2d.flip_h:
+			player.animation_player.play("attack_l")
+		else:
+			player.animation_player.play("attack_r")
 
 func _on_exit(next: StringName):
 	_active = false
-	player.whip_shape.set_deferred("disabled", true)
 	pass
 
 func _on_input(event: InputEvent):
@@ -26,6 +32,10 @@ func _on_process(delta: float):
 	
 	if player.is_on_floor():
 		player.velocity.x = 0.0
+		if player.animation_player.current_animation.contains("jump"):
+			var t := player.animation_player.current_animation_position
+			player.animation_player.current_animation = player.animation_player.current_animation.substr(5)
+			player.animation_player.seek(t, true)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
