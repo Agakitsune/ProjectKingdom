@@ -11,8 +11,8 @@ var velocity: Vector2
 var _grav: Vector2
 
 func _ready() -> void:
-	velocity.x = -180 if flip else 180
-	velocity.y = -500
+	velocity.x = -90 if flip else 90
+	velocity.y = -250
 	
 	sprite_2d.flip_h = flip
 	
@@ -36,4 +36,4 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage()
+	body._damage(6)

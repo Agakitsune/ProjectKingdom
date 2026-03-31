@@ -11,4 +11,5 @@ func _process(delta: float) -> void:
 	pass
 	
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage()
+	if body != Player:
+		body._damage(7)

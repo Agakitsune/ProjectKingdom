@@ -1654,7 +1654,7 @@ autoplay = &"idle"
 
 [node name="Whip" type="Area2D" parent="." unique_id=1567318469]
 unique_name_in_owner = true
-collision_layer = 0
+collision_layer = 4096
 collision_mask = 4
 
 [node name="WhipShape" type="CollisionShape2D" parent="Whip" unique_id=1623542061]

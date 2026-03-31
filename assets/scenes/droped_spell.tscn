@@ -1,34 +1,34 @@
 [gd_scene format=3 uid="uid://c5wrvqjwlejqw"]
 
 [ext_resource type="Script" uid="uid://cji8261ll0yql" path="res://assets/scripts/droped_spell.gd" id="1_isn4u"]
-[ext_resource type="Texture2D" uid="uid://c03b6ygdd38ek" path="res://icon.svg" id="2_u2jgm"]
+[ext_resource type="Texture2D" uid="uid://dtarco8s3tmci" path="res://assets/textures/tmp_axe.png" id="2_isn4u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d35td"]
-size = Vector2(128, 128)
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_isn4u"]
-size = Vector2(140.00002, 140.00003)
+size = Vector2(32.000008, 32.00001)
 
 [node name="DropedSpell" type="Node2D" unique_id=1008382377]
 texture_filter = 1
-scale = Vector2(0.2, 0.2)
 script = ExtResource("1_isn4u")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1810221315]
-position = Vector2(0, -11.999999)
-texture = ExtResource("2_u2jgm")
+position = Vector2(-1, -32)
+texture = ExtResource("2_isn4u")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D" unique_id=1264704751]
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D" unique_id=158770483]
+position = Vector2(0, -7.6293945e-06)
 shape = SubResource("RectangleShape2D_d35td")
 
 [node name="Area2D2" type="Area2D" parent="Sprite2D" unique_id=542300855]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D2" unique_id=672720870]
-position = Vector2(7.152556e-06, 0)
+position = Vector2(0, -7.6293945e-06)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_isn4u")
 
