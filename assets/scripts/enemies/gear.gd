@@ -87,11 +87,11 @@ func fall():
 	fell.emit()
 
 
-func _damage(x: float = 1.0):
+func _damage(x: float = 1.0, w := true):
 	queue_free()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var n := global_position.direction_to(body.global_position)
 	
-	body.damage(3, -1 if n.x < 0 else 1)
+	body.damage(8, -1 if n.x < 0 else 1)

@@ -2,11 +2,59 @@
 
 [ext_resource type="Script" uid="uid://n0jqymr2lapw" path="res://assets/scripts/enemies/axe.gd" id="1_dl7na"]
 [ext_resource type="Texture2D" uid="uid://c8frtac5akf2" path="res://assets/textures/tmp_axem.png" id="2_xipis"]
+[ext_resource type="Texture2D" uid="uid://cyk3e1wc8igi5" path="res://assets/textures/spritesheets/flame.png" id="3_xipis"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dgws0"]
 size = Vector2(16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgws0"]
+atlas = ExtResource("3_xipis")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vq3k"]
+atlas = ExtResource("3_xipis")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjuuw"]
+atlas = ExtResource("3_xipis")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv4k3"]
+atlas = ExtResource("3_xipis")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpao0"]
+atlas = ExtResource("3_xipis")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3cook"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgws0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vq3k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjuuw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv4k3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpao0")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 16.0
+}]
+
 [node name="Axe" type="Area2D" unique_id=1260251188]
+texture_filter = 1
 collision_layer = 132
 script = ExtResource("1_dl7na")
 
@@ -16,5 +64,11 @@ texture = ExtResource("2_xipis")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1693235449]
 shape = SubResource("RectangleShape2D_dgws0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1996644858]
+visible = false
+sprite_frames = SubResource("SpriteFrames_3cook")
+frame = 5
+frame_progress = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

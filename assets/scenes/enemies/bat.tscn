@@ -1,13 +1,196 @@
 [gd_scene format=3 uid="uid://cnia5frfpdk36"]
 
 [ext_resource type="Script" uid="uid://dwkkhbovxbnw5" path="res://assets/scripts/enemies/bat.gd" id="1_54avu"]
-[ext_resource type="Texture2D" uid="uid://kml55v07g7yx" path="res://assets/textures/tmp_bat.png" id="1_tt75m"]
+[ext_resource type="Texture2D" uid="uid://bjjc51og1cudk" path="res://assets/textures/spritesheets/bat.png" id="2_54avu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_54avu"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5arkq"]
 size = Vector2(12, 12)
+
+[sub_resource type="Animation" id="Animation_5arkq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 0, 32, 48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16, -16)]
+}
+
+[sub_resource type="Animation" id="Animation_siyr2"]
+resource_name = "death_L"
+length = 0.37500626
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 48, 32, 32), Rect2(32, 48, 32, 32), Rect2(64, 48, 32, 32), Rect2(96, 48, 48, 32), Rect2(144, 48, 32, 32), Rect2(176, 64, 16, 16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1875, 0.25, 0.3125),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(16, -16), Vector2(24, -16), Vector2(32, -16), Vector2(40, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_54avu"]
+resource_name = "death"
+length = 0.37500626
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(0, 48, 32, 32), Rect2(32, 48, 32, 32), Rect2(64, 48, 32, 32), Rect2(96, 48, 48, 32), Rect2(144, 48, 32, 32), Rect2(176, 64, 16, 16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1875, 0.25, 0.3125),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-16, -16), Vector2(-24, -16), Vector2(-32, -16), Vector2(-40, -8)]
+}
+
+[sub_resource type="Animation" id="Animation_8y4e5"]
+resource_name = "fall"
+length = 0.250025
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(16, 0, 32, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bytvw"]
+resource_name = "fly"
+length = 0.500025
+loop_mode = 2
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(48, 0, 32, 48), Rect2(80, 0, 32, 48), Rect2(112, 0, 32, 48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_txojm"]
+resource_name = "idle"
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Rect2(0, 0, 16, 16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_siyr2"]
+_data = {
+&"RESET": SubResource("Animation_5arkq"),
+&"death_L": SubResource("Animation_siyr2"),
+&"death_R": SubResource("Animation_54avu"),
+&"fall": SubResource("Animation_8y4e5"),
+&"fly": SubResource("Animation_bytvw"),
+&"idle": SubResource("Animation_txojm")
+}
 
 [node name="Bat" type="CharacterBody2D" unique_id=875865574]
 collision_layer = 4
@@ -16,9 +199,10 @@ script = ExtResource("1_54avu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=16775758]
 texture_filter = 1
-texture = ExtResource("1_tt75m")
+texture = ExtResource("2_54avu")
+offset = Vector2(-16, -16)
 region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
+region_rect = Rect2(16, 0, 32, 48)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1591778535]
 shape = SubResource("RectangleShape2D_54avu")
@@ -29,5 +213,9 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=759417538]
 shape = SubResource("RectangleShape2D_5arkq")
 debug_color = Color(0.99503726, 0, 0.21984771, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1678711642]
+libraries/ = SubResource("AnimationLibrary_siyr2")
+autoplay = &"idle"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

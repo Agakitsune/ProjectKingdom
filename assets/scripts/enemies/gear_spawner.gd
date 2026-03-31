@@ -51,7 +51,7 @@ func _draw() -> void:
 func random_fall():
 	var selected: PackedInt32Array
 	
-	while selected.size() < 10:
+	while selected.size() < 8:
 		var idx := randi_range(0, _gears.size() - 1)
 		
 		if not idx in selected:

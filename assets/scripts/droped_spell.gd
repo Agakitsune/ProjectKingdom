@@ -1,28 +1,35 @@
-extends Node2D
+extends CharacterBody2D
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
-var velocity = Vector2(0, 300)
-var spell_name
-var id
-var player
-var _spell
-# Called when the node enters the scene tree for the first time.
+#var velocity = Vector2(0, 300)
+#var spell_name
+#var id
+#var player
+#var _spell
+
+var _item := 0
+
 func _ready() -> void:
-	pass # Replace with function body.
+	(sprite_2d.texture as AtlasTexture).region.position.x = _item * 16
 
-func setup(spell_name, spell, id):
-	sprite_2d.texture = load(spell.texture)
-	_spell = spell
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	position += velocity * delta
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
+	move_and_slide()
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	velocity = Vector2.ZERO
 
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
-	player.playerUi.set_spell_texture(_spell.texture)
-	player._spell = load(_spell.id)
+	match _item:
+		5:
+			body._heart += 5
+			body.update.emit()
+		4:
+			body._heart += 1
+			body.update.emit()
+		3, 2, 1, 0:
+			body.load_spell(_item)
+	
 	queue_free()

@@ -18,7 +18,14 @@ const ARTEFACT := preload("uid://2a7uiidb7g4m")
 @export var bossroom := false
 @export var respawn: Marker2D = null
 
+@export_category("Parallax")
+@export var layer_size: Vector2i
+@export var layer: TileMapLayer
+@export var lock_x := false
+@export var lock_y := false
+
 @onready var collision_shape_2d: CollisionShape2D = $Zone/CollisionShape2D
+@onready var sprite_2d: Sprite2D = $"../Zone3/Sprite2D"
 
 var _zone: Rect2
 var _doors: Array[Door]
@@ -30,6 +37,8 @@ var _active_respawn: Marker2D
 
 signal boss_triggered(b: Node2D)
 signal boss_summoned()
+signal camera_shake(duration: float, amp: float)
+signal floor_damage(x: int)
 
 func _ready() -> void:
 	_zone.size = Vector2(width, height)
@@ -68,6 +77,8 @@ func _process(delta: float) -> void:
 				_respawn.push_back(c)
 		
 		queue_redraw()
+	
+	sprite_2d.rotate(delta * 0.05)
 
 
 func _draw() -> void:
@@ -195,10 +206,43 @@ func snapv_into(v: Vector2) -> Vector2:
 		-cam_size.y,
 	)
 	
-	return v.clamp(
+	var snapped := v.clamp(
 		reduced_rect.position,
 		reduced_rect.end
 	)
+	
+	if layer:
+		if not lock_x:
+			var mid := roundf(_zone.size.x / 2.0)
+			if snapped.x == reduced_rect.position.x:
+				layer.position.x = -mid
+			elif snapped.x == reduced_rect.end.x:
+				layer.position.x = mid - layer_size.x
+			else:
+				var ratio_x := reduced_rect.end.x - reduced_rect.position.x
+				ratio_x = (snapped.x - reduced_rect.position.x) / ratio_x
+				
+				layer.position.x = -mid + roundf((
+					_zone.size.x - layer_size.x
+				) * ratio_x)
+		
+		if not lock_y:
+			var mid := roundf(_zone.size.y / 2.0)
+			if snapped.y == reduced_rect.position.y:
+				layer.position.y = -mid + layer_size.y
+			elif snapped.y == reduced_rect.end.y:
+				layer.position.y = mid
+			else:
+				var ratio_y := reduced_rect.end.y - reduced_rect.position.y
+				ratio_y = (snapped.y - reduced_rect.position.y) / ratio_y
+				
+				print(ratio_y)
+				
+				layer.position.y = -mid + layer_size.y + roundf((
+					_zone.size.y - layer_size.y
+				) * ratio_y)
+	
+	return snapped
 
 
 func setup_limit(c: Camera2D):
@@ -213,6 +257,10 @@ func _on_bossdoor_closed():
 		return
 	
 	var boss := _spawners[0].get_child(0)
+	
+	if not boss:
+		return
+	
 	boss.defeated.connect(_on_boss_defeated)
 	
 	boss_triggered.emit(boss)
@@ -222,7 +270,7 @@ func _on_boss_defeated():
 	var artefact := ARTEFACT.instantiate()
 	
 	add_child.call_deferred(artefact)
-	artefact.position.y = -64
+	artefact.position.y = -32
 
 
 func _set_width(x: float):
@@ -270,3 +318,9 @@ func _update_shape():
 
 func _on_iron_golem_earthquaked() -> void:
 	_spawners[1]._instance.random_fall() # Very hacky but don't care :)
+	camera_shake.emit(1.0, 10.0)
+	floor_damage.emit(4)
+
+
+func _on_iron_golem_stepped() -> void:
+	camera_shake.emit(0.5, 2.0)

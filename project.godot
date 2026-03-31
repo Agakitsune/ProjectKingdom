@@ -27,6 +27,7 @@ window/stretch/scale_mode="integer"
 
 folder_colors={
 "res://assets/resources/": "green",
+"res://assets/resources/frames/": "blue",
 "res://assets/resources/spells/": "teal",
 "res://assets/scenes/": "red",
 "res://assets/scenes/enemies/": "orange",

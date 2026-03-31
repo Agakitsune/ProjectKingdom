@@ -12,16 +12,23 @@ func _ready() -> void:
 	boss.value = 0.0
 
 
+func set_boss_health(x: float):
+	boss.value = x
+
+
 func _update_player(p: Player) -> void:
 	health.value = p._health
 	_update_lives(p._lives)
 	_update_heart(p._heart)
-	_update_subweapon(p._spell.idx)
+	if p._spell:
+		_update_subweapon(p._spell.idx + 1)
+	else:
+		_update_subweapon(0)
 	_update_score(p._score)
 
 
 func _update_subweapon(x: int) -> void:
-	var a := (lives.get_children()[0] as TextureRect).texture as AtlasTexture
+	var a := subweapon.texture as AtlasTexture
 	
 	a.region.position.x = 16 * x
 
@@ -31,7 +38,7 @@ func _update_heart(x: int) -> void:
 	
 	for i in range(3):
 		var k := x % 10
-		var tex := (c[i] as TextureRect).texture as AtlasTexture
+		var tex := (c[2 - i] as TextureRect).texture as AtlasTexture
 		x = x / 10
 		
 		tex.region.position = _get_number(k)
@@ -63,7 +70,7 @@ func _update_score(x: int) -> void:
 	
 	for i in range(6):
 		var k := x % 10
-		var tex := (c[i] as TextureRect).texture as AtlasTexture
+		var tex := (c[5 - i] as TextureRect).texture as AtlasTexture
 		x = x / 10
 		
 		tex.region.position = _get_number(k)

@@ -1,19 +1,21 @@
 [gd_scene format=3 uid="uid://di7k2wxt3umvu"]
 
 [ext_resource type="Script" uid="uid://sj1le5ibtnr8" path="res://assets/scripts/subweapons/axe.gd" id="1_3hn30"]
-[ext_resource type="Texture2D" uid="uid://dtarco8s3tmci" path="res://assets/textures/tmp_axe.png" id="1_6y37w"]
+[ext_resource type="Texture2D" uid="uid://c0ef7nqs6uu4e" path="res://assets/textures/subweapon.png" id="2_3hn30"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dga02"]
+atlas = ExtResource("2_3hn30")
+region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hn30"]
-size = Vector2(32, 32)
+size = Vector2(16, 16)
 
 [node name="Axe" type="Node2D" unique_id=1715238593]
 texture_filter = 1
-scale = Vector2(0.5, 0.5)
 script = ExtResource("1_3hn30")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=499498009]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_6y37w")
+texture = SubResource("AtlasTexture_dga02")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=800238829]
 collision_layer = 4096

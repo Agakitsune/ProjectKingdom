@@ -7,6 +7,8 @@ var _current: Zone
 
 signal zone_loaded(next: Zone)
 signal boss_triggered(b: Node2D)
+signal camera_shake(duration: float, amp: float)
+signal floor_damage(x: int)
 
 func snapv_into(p: Vector2) -> Vector2:
 	return _current.snapv_into(p)
@@ -94,3 +96,11 @@ func reset(p: Player, c: Camera2D):
 
 func _on_boss_triggered(b: Node2D) -> void:
 	boss_triggered.emit(b)
+
+
+func _on_zone_3_camera_shake(duration: float, amp: float) -> void:
+	camera_shake.emit(duration, amp)
+
+
+func _on_zone_3_floor_damage(x: int) -> void:
+	floor_damage.emit(x)

@@ -28,9 +28,9 @@ func _on_process(delta: float):
 		delta * 4.0
 	)
 	
-	if vel.length() <= 0.01:
+	if not player.animation_player.is_playing():
 		player.dead.emit()
-		return # TODO: Reset the current zone
+		return
 	
 	player.velocity = vel
 	

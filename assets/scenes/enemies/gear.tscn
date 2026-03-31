@@ -14,7 +14,7 @@ resource_local_to_scene = true
 size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jikqb"]
-size = Vector2(8, 8)
+size = Vector2(24, 24)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2h8tq"]
 particles_animation = true
@@ -137,6 +137,7 @@ _data = {
 }
 
 [node name="Gear" type="CharacterBody2D" unique_id=930237263]
+position = Vector2(0, -3.9812648)
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_jikqb")

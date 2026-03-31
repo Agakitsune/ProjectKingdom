@@ -25,7 +25,10 @@ func _on_process(delta: float):
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 	
-	player.velocity.x = direction * player.SPEED
+		player.velocity.x = direction * player.SPEED * player.AIR_MUL
+	else:
+		player.velocity.x = direction * player.SPEED
+	
 	player.move_and_slide()
 
 

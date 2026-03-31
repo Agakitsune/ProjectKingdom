@@ -9,11 +9,12 @@ func _on_enter(previous: StringName):
 		pass # 
 	if _direction:
 		player.animation_player.play("big_hurt")
-		player.velocity.y = -300
+		player.velocity.y = -200
 		player.velocity.x = _direction * 100
 		_floored = false
 	else:
 		player.animation_player.play("small_hurt")
+		_floored = false
 
 func _on_exit(next: StringName):
 	pass

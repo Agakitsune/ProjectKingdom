@@ -96,6 +96,7 @@ atlas = ExtResource("2_wfufq")
 region = Rect2(32, 64, 80, 32)
 
 [node name="PlayerUi" type="Control" unique_id=76737324]
+process_mode = 3
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -142,7 +143,7 @@ texture_progress = SubResource("AtlasTexture_wfufq")
 unique_name_in_owner = true
 z_index = 1
 layout_mode = 2
-value = 100.0
+max_value = 300.0
 texture_progress = SubResource("AtlasTexture_dkqhi")
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer" unique_id=3538557]
@@ -153,7 +154,8 @@ texture = SubResource("AtlasTexture_4fmot")
 [node name="Control" type="Control" parent="HBoxContainer/VBoxContainer" unique_id=1049816422]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/VBoxContainer/Control" unique_id=907904789]
+[node name="Subweapon" type="TextureRect" parent="HBoxContainer/VBoxContainer/Control" unique_id=907904789]
+unique_name_in_owner = true
 layout_mode = 0
 offset_right = 16.0
 offset_bottom = 16.0
@@ -185,8 +187,7 @@ z_index = 1
 layout_mode = 2
 texture = SubResource("AtlasTexture_0h6ko")
 
-[node name="Subweapon" type="TextureRect" parent="HBoxContainer/VBoxContainer" unique_id=896759966]
-unique_name_in_owner = true
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/VBoxContainer" unique_id=896759966]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = SubResource("AtlasTexture_5jwsh")

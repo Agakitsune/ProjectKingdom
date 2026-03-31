@@ -54,11 +54,16 @@ func _on_timer_timeout() -> void:
 	
 	var cam := get_canvas_transform().affine_inverse() * get_viewport_rect()
 	
+	var s := player.global_position.y + randf_range(-32, 32.0)
+	var min := global_position.y - height / 2.0
+	var max := global_position.y + height / 2.0
+	s = clampf(s, min, max)
+	
 	if flip:
 		medusa.global_position.x = cam.position.x - 64
 	else:
 		medusa.global_position.x = cam.end.x + 64
-	medusa.global_position.y = player.global_position.y + randf_range(-32, 32.0)
+	medusa.global_position.y = s
 
 func _set_width(x: float):
 	width = x
@@ -88,6 +93,9 @@ func _set_height(x: float):
 
 
 func _update_shape():
+	if not collision_shape_2d:
+		return
+	
 	(collision_shape_2d.shape as RectangleShape2D).size = Vector2(width, height)
 
 

@@ -30,7 +30,6 @@ position = Vector2(0, -32)
 
 [node name="Camera" type="Camera2D" parent="CameraControl" unique_id=1638086590]
 unique_name_in_owner = true
-visible = false
 
 [connection signal="teleport" from="CanvasLayer/Debug" to="." method="_on_debug_teleport"]
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]

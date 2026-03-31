@@ -1,66 +1,19 @@
 [gd_scene format=3 uid="uid://bynd4eprlcim6"]
 
-[ext_resource type="Texture2D" uid="uid://bye8q2xv2eidw" path="res://assets/textures/Candle.png" id="1_baxvr"]
 [ext_resource type="Script" uid="uid://cqqubdtswpgrj" path="res://assets/scripts/candle.gd" id="1_s0qkj"]
+[ext_resource type="SpriteFrames" uid="uid://bmf77ceoo5vff" path="res://assets/resources/frames/big_candle.tres" id="2_s0qkj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0qkj"]
+size = Vector2(16, 16)
 
-[sub_resource type="Animation" id="Animation_baxvr"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_s0qkj"]
-resource_name = "candle"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lkbf3"]
-_data = {
-&"RESET": SubResource("Animation_baxvr"),
-&"candle": SubResource("Animation_s0qkj")
-}
-
-[node name="Candle" type="Node2D" unique_id=387429283]
+[node name="Candle" type="Area2D" unique_id=419645276]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_s0qkj")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1268779689]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2110089574]
 texture_filter = 1
-texture = ExtResource("1_baxvr")
-hframes = 3
-region_enabled = true
-region_rect = Rect2(0, 0, 96, 32)
+sprite_frames = ExtResource("2_s0qkj")
 
-[node name="Area2D" type="Area2D" parent="Sprite2D" unique_id=153562587]
-collision_layer = 0
-collision_mask = 4096
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D" unique_id=1972364497]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1972364497]
 shape = SubResource("RectangleShape2D_s0qkj")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=148205631]
-libraries/ = SubResource("AnimationLibrary_lkbf3")
-
-[connection signal="area_entered" from="Sprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
