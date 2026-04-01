@@ -319,6 +319,7 @@ func _on_player_stage_cleared() -> void:
 	)
 	#
 	get_tree().paused = false
+	get_tree().change_scene_to_file("res://assets/scenes/world.tscn")
 	pass
 
 
