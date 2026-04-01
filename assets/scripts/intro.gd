@@ -67,6 +67,7 @@ func start():
 
 
 func reset():
+	set_process_input(false)
 	_done = false
 
 

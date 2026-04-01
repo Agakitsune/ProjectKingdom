@@ -46,8 +46,6 @@ func _load_stage():
 	if _stage:
 		remove_child(_stage)
 	
-	player.reset(true)
-	
 	_stage = stage.instantiate()
 	
 	_time = _stage.time
@@ -63,6 +61,8 @@ func _load_stage():
 	_stage.process_mode = Node.PROCESS_MODE_PAUSABLE
 	
 	debug.set_stage(_stage)
+	
+	_stage.reset(player, camera)
 	
 	camera_control.global_position = player.global_position
 	camera_control.global_position = _stage.snapv_into(camera_control.global_position)
@@ -301,10 +301,10 @@ func _on_player_stage_cleared() -> void:
 	_cleared = true
 	
 	_loaded = false
-	title.show()
-	intro.show()
 	title.reset()
 	intro.reset()
+	title.show()
+	intro.show()
 	
 	blood.stop()
 	aquarius_loop.stop()

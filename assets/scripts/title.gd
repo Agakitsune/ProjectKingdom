@@ -35,8 +35,10 @@ func _input(event: InputEvent) -> void:
 		)
 
 
-func _reset():
+func reset():
 	_accel = 4.0
+	texture_rect.modulate.a = 1.0
+	label.modulate.a = 1.0
 
 
 func _process(delta: float) -> void:

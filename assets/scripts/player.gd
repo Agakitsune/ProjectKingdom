@@ -122,7 +122,7 @@ func _set_offset(x: float):
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage(500.0, false)
+	body._damage(5.0, false)
 
 
 func _on_whip_area_entered(area: Area2D) -> void:
