@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://j32av737kc8k"]
+
+[ext_resource type="Script" path="res://assets/scripts/intro.gd" id="1_qhy35"]
+[ext_resource type="Texture2D" uid="uid://ba0s6r3eoelpn" path="res://assets/textures/intro.png" id="2_rkhck"]
+[ext_resource type="AudioStream" uid="uid://ct48iy5bgc56f" path="res://assets/sounds/musics/02. Mark of the Bloodline.mp3" id="3_rkhck"]
+[ext_resource type="FontFile" uid="uid://d06ym18n2ftvl" path="res://assets/fonts/Kenney Pixel.ttf" id="4_25tqm"]
+
+[node name="Intro" type="Control" unique_id=584380217]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qhy35")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=706550860]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -288.0
+offset_right = 240.0
+grow_vertical = 0
+texture = ExtResource("2_rkhck")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1478682584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=420995222]
+stream = ExtResource("3_rkhck")
+
+[node name="Label" type="Label" parent="." unique_id=962071246]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("4_25tqm")
+theme_override_font_sizes/font_size = 16
+text = "It is 1830...
+at an old Austrian castle.
+From the worshippers of
+chaos, rise the plea for
+the return of the Lord of
+Darkness."
+vertical_alignment = 1
+visible_characters = 125
+visible_characters_behavior = 3

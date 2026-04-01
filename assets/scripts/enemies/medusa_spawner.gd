@@ -26,6 +26,9 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	if not Engine.is_editor_hint():
+		return
+	
 	var n := Vector2(25, 0) if flip else Vector2(-25, 0)
 	
 	draw_colored_polygon(

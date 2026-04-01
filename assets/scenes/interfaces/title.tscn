@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://diya1gpuo2cbr"]
+
+[ext_resource type="Texture2D" uid="uid://blkibkxxrmgn1" path="res://assets/textures/title.png" id="1_np7yl"]
+[ext_resource type="Script" uid="uid://dijh7eef1kb5s" path="res://assets/scripts/title.gd" id="1_tpua6"]
+[ext_resource type="FontFile" uid="uid://ct447c06kbgr4" path="res://assets/fonts/Kenney Mini Square.ttf" id="2_tpua6"]
+
+[node name="Title" type="Control" unique_id=906836934]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tpua6")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1001824954]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2012234748]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=639781558]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=20588994]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("1_np7yl")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=889194097]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpua6")
+theme_override_font_sizes/font_size = 8
+text = "Press Start"
+horizontal_alignment = 1

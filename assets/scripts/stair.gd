@@ -17,9 +17,15 @@ func _ready() -> void:
 	_update_shape()
 
 func _process(delta: float) -> void:
-	queue_redraw()
+	if Engine.is_editor_hint():
+		queue_redraw()
 
 func _draw() -> void:
+	if not Engine.is_editor_hint():
+		return
+	
+	if length == 0:
+		return
 	for x in range(length + 1):
 		var p := path_2d.curve.sample_baked(x * 11.31)
 		draw_circle(p, 1.0, Color.RED)

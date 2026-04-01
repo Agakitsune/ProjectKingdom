@@ -48,6 +48,8 @@ func _ready() -> void:
 	await get_parent().ready
 	
 	update.emit()
+	
+	Global.player = self
 
 func _input(event: InputEvent) -> void:
 	pass
@@ -110,8 +112,6 @@ func load_spell(idx: int):
 	
 
 func stage_clear():
-	get_tree().paused = true
-	
 	stage_cleared.emit()
 
 func _set_offset(x: float):
@@ -122,11 +122,11 @@ func _set_offset(x: float):
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	body._damage(5.0, false)
+	body._damage(500.0, false)
 
 
 func _on_whip_area_entered(area: Area2D) -> void:
-	area._damage(2.0)
+	area._damage(5.0)
 
 
 func _on_stair_collider_body_entered(body: Node2D) -> void:

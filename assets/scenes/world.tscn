@@ -5,6 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://cq0ww67k4pklp" path="res://assets/scenes/stage_1.tscn" id="2_0moxn"]
 [ext_resource type="PackedScene" uid="uid://chko5hpruymly" path="res://assets/scenes/player_ui.tscn" id="3_0moxn"]
 [ext_resource type="PackedScene" uid="uid://r42ai604nfm8" path="res://assets/scenes/interfaces/debug.tscn" id="4_0moxn"]
+[ext_resource type="PackedScene" path="res://assets/scenes/interfaces/text.tscn" id="5_bd1kc"]
+[ext_resource type="PackedScene" path="res://assets/scenes/interfaces/title.tscn" id="6_fbnfw"]
+[ext_resource type="PackedScene" uid="uid://j32av737kc8k" path="res://assets/scenes/interfaces/intro.tscn" id="7_02vil"]
+[ext_resource type="AudioStream" uid="uid://c6m2tc4unhtfq" path="res://assets/sounds/musics/AquariusStart.wav" id="7_e345b"]
+[ext_resource type="AudioStream" uid="uid://cj0japno8hiol" path="res://assets/sounds/musics/AquariusLoop.wav" id="8_fbnfw"]
+[ext_resource type="AudioStream" uid="uid://bnej1acyidksm" path="res://assets/sounds/musics/17 Proof of Blood.mp3" id="11_fbnfw"]
 
 [node name="World" type="Node2D" unique_id=1782814269]
 texture_filter = 1
@@ -17,6 +23,16 @@ stage = ExtResource("2_0moxn")
 
 [node name="Debug" parent="CanvasLayer" unique_id=393424126 instance=ExtResource("4_0moxn")]
 visible = false
+
+[node name="Text" parent="CanvasLayer" unique_id=1947864134 instance=ExtResource("5_bd1kc")]
+
+[node name="Title" parent="CanvasLayer" unique_id=906836934 instance=ExtResource("6_fbnfw")]
+process_mode = 3
+z_index = 4
+
+[node name="Intro" parent="CanvasLayer" unique_id=584380217 instance=ExtResource("7_02vil")]
+process_mode = 3
+z_index = 1
 
 [node name="Player" parent="." unique_id=1300672341 instance=ExtResource("1_betll")]
 process_mode = 1
@@ -31,7 +47,27 @@ position = Vector2(0, -32)
 [node name="Camera" type="Camera2D" parent="CameraControl" unique_id=1638086590]
 unique_name_in_owner = true
 
+[node name="AquariusStart" type="AudioStreamPlayer" parent="." unique_id=1921999898]
+process_mode = 3
+stream = ExtResource("7_e345b")
+bus = &"A"
+
+[node name="AquariusLoop" type="AudioStreamPlayer" parent="." unique_id=1056704840]
+process_mode = 3
+stream = ExtResource("8_fbnfw")
+bus = &"A"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1689665763]
+process_mode = 3
+stream = ExtResource("11_fbnfw")
+bus = &"B"
+parameters/looping = true
+
 [connection signal="teleport" from="CanvasLayer/Debug" to="." method="_on_debug_teleport"]
+[connection signal="done" from="CanvasLayer/Title" to="." method="_on_title_done"]
+[connection signal="done" from="CanvasLayer/Intro" to="." method="_on_intro_done"]
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="stage_cleared" from="Player" to="." method="_on_player_stage_cleared"]
 [connection signal="update" from="Player" to="." method="_on_player_update"]
+[connection signal="finished" from="AquariusStart" to="." method="_on_aquarius_start_finished"]
+[connection signal="finished" from="AquariusLoop" to="." method="_on_aquarius_loop_finished"]

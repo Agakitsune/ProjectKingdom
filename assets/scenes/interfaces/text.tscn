@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bqrm8a5ios4m6"]
+
+[ext_resource type="Script" uid="uid://cua57gsd0clik" path="res://assets/scripts/text.gd" id="1_by82c"]
+[ext_resource type="Texture2D" uid="uid://b70lbiw5hg2lr" path="res://assets/textures/text.png" id="1_sevhb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_by82c"]
+atlas = ExtResource("1_sevhb")
+region = Rect2(0, 0, 64, 16)
+
+[node name="Text" type="Control" unique_id=1947864134]
+process_mode = 3
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_by82c")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2099179389]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+color = Color(0, 0, 0, 0.5019608)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=548782265]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_by82c")

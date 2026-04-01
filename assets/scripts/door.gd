@@ -22,6 +22,9 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	if not Engine.is_editor_hint():
+		return
+	
 	var mid: Vector2
 	
 	var c := Control.new()

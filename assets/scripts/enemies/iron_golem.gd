@@ -184,8 +184,11 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		timer.start()
 		_attack = false
 	elif anim_name == "death":
-		defeated.emit() # Play some animation and shit
 		queue_free()
+
+
+func send_defeated():
+	defeated.emit() # Play some animation and shit
 
 
 func _on_invi_timeout() -> void:

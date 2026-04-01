@@ -37,6 +37,9 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	if not Engine.is_editor_hint():
+		return
+	
 	var rect: Rect2
 	
 	rect.size.x = range
